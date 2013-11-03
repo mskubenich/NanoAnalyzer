@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sun Nov 3 13:33:09 2013
+** Created: Sun Nov 3 15:38:26 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -95,7 +95,6 @@ public:
     NanoAnalyzerClass->setStatusBar(statusbar);
 
     retranslateUi(NanoAnalyzerClass);
-    QObject::connect(pushButton, SIGNAL(clicked()), NanoAnalyzerClass, SLOT(close()));
 
     QMetaObject::connectSlotsByName(NanoAnalyzerClass);
     } // setupUi
@@ -103,7 +102,7 @@ public:
     void retranslateUi(QMainWindow *NanoAnalyzerClass)
     {
     NanoAnalyzerClass->setWindowTitle(QApplication::translate("NanoAnalyzerClass", "NanoAnalyzer", 0, QApplication::UnicodeUTF8));
-    pushButton->setText(QApplication::translate("NanoAnalyzerClass", "PushButton", 0, QApplication::UnicodeUTF8));
+    pushButton->setText(QApplication::translate("NanoAnalyzerClass", "Quit", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi
 

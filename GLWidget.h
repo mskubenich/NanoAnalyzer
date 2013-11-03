@@ -14,10 +14,21 @@ class GLWidget : public QGLWidget {
 	Q_OBJECT
 public:
 	explicit GLWidget(QWidget *parent = 0);
-
 	void initializeGL();
 	void paintGL();
 	void resizeGL(int w, int h);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void mouseDoubleClickEvent(QMouseEvent *event);
+
+private:
+	void draw();
+	int faceAtPosition(const QPoint &pos);
+	GLfloat rotationX;
+	GLfloat rotationY;
+	GLfloat rotationZ;
+	QColor faceColors[6];
+	QPoint lastPos;
 };
 
 #endif /* GLWIDGET_H_ */

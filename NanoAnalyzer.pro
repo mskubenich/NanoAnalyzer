@@ -11,4 +11,4 @@ SOURCES += GLWidget.cpp \
     main.cpp \
     nanoanalyzer.cpp
 FORMS += nanoanalyzer.ui
-RESOURCES += 
+RESOURCES +=

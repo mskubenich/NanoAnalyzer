@@ -47,7 +47,7 @@
         <item>
          <widget class="QPushButton" name="pushButton" >
           <property name="text" >
-           <string>PushButton</string>
+           <string>Quit</string>
           </property>
          </widget>
         </item>
@@ -81,22 +81,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>NanoAnalyzerClass</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>738</x>
-     <y>280</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>769</x>
-     <y>107</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

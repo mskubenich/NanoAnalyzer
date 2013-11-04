@@ -12,6 +12,9 @@ public:
     NanoAnalyzer(QWidget *parent = 0);
     ~NanoAnalyzer();
 
+private slots:
+    void on_startButton_clicked();
+
 private:
     Ui::NanoAnalyzerClass ui;
 };

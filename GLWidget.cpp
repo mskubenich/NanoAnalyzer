@@ -8,6 +8,7 @@
 #include "GLWidget.h"
 #include <QMouseEvent>
 #include <QColorDialog>
+#include <qmessagebox.h>
 
 GLWidget::GLWidget(QWidget *parent) :
 	QGLWidget(parent) {
@@ -64,6 +65,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GLWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
+	QMessageBox::information(this, "Hello World!", "Hi!");
   int face = faceAtPosition(event->pos());
   if (face != -1) {
     QColor color = QColorDialog::getColor(faceColors[face],

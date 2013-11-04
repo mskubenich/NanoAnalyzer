@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sun Nov 3 15:38:26 2013
+** Created: Mon Nov 4 14:49:05 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -36,7 +36,7 @@ public:
     GLWidget *widget;
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
+    QPushButton *startButton;
     QTableView *tableView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -46,7 +46,7 @@ public:
     if (NanoAnalyzerClass->objectName().isEmpty())
         NanoAnalyzerClass->setObjectName(QString::fromUtf8("NanoAnalyzerClass"));
     NanoAnalyzerClass->setWindowModality(Qt::ApplicationModal);
-    NanoAnalyzerClass->resize(800, 600);
+    NanoAnalyzerClass->resize(953, 630);
     centralwidget = new QWidget(NanoAnalyzerClass);
     centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
     verticalLayout_2 = new QVBoxLayout(centralwidget);
@@ -60,6 +60,7 @@ public:
     sizePolicy.setVerticalStretch(0);
     sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
     widget->setSizePolicy(sizePolicy);
+    widget->setCursor(QCursor(Qt::OpenHandCursor));
 
     horizontalLayout->addWidget(widget);
 
@@ -69,10 +70,10 @@ public:
 
     verticalLayout->addItem(verticalSpacer);
 
-    pushButton = new QPushButton(centralwidget);
-    pushButton->setObjectName(QString::fromUtf8("pushButton"));
+    startButton = new QPushButton(centralwidget);
+    startButton->setObjectName(QString::fromUtf8("startButton"));
 
-    verticalLayout->addWidget(pushButton);
+    verticalLayout->addWidget(startButton);
 
 
     horizontalLayout->addLayout(verticalLayout);
@@ -82,13 +83,18 @@ public:
 
     tableView = new QTableView(centralwidget);
     tableView->setObjectName(QString::fromUtf8("tableView"));
+    QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    sizePolicy1.setHorizontalStretch(0);
+    sizePolicy1.setVerticalStretch(0);
+    sizePolicy1.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+    tableView->setSizePolicy(sizePolicy1);
 
     verticalLayout_2->addWidget(tableView);
 
     NanoAnalyzerClass->setCentralWidget(centralwidget);
     menubar = new QMenuBar(NanoAnalyzerClass);
     menubar->setObjectName(QString::fromUtf8("menubar"));
-    menubar->setGeometry(QRect(0, 0, 800, 22));
+    menubar->setGeometry(QRect(0, 0, 953, 22));
     NanoAnalyzerClass->setMenuBar(menubar);
     statusbar = new QStatusBar(NanoAnalyzerClass);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -102,7 +108,7 @@ public:
     void retranslateUi(QMainWindow *NanoAnalyzerClass)
     {
     NanoAnalyzerClass->setWindowTitle(QApplication::translate("NanoAnalyzerClass", "NanoAnalyzer", 0, QApplication::UnicodeUTF8));
-    pushButton->setText(QApplication::translate("NanoAnalyzerClass", "Quit", 0, QApplication::UnicodeUTF8));
+    startButton->setText(QApplication::translate("NanoAnalyzerClass", "Open", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi
 

@@ -4,7 +4,8 @@
 #include <qfiledialog.h>
 #include <qstandarditemmodel.h>
 #include <qtextstream.h>
-
+#include <QString>
+#include <QtDebug>
 
 NanoAnalyzer::NanoAnalyzer(QWidget *parent)
     : QMainWindow(parent)
@@ -36,14 +37,19 @@ void NanoAnalyzer::on_startButton_clicked()
 	QTextStream in(&file);
 
 	int i = 0;
+	bool poins_started = false;
 	while(!in.atEnd()) {
 	    QString line = in.readLine();
-//	    QStringList fields = line.split(",");
-//	    model->appendRow(fields);
 
-		QStandardItem *firstRow = new QStandardItem(QString(line));
-		model->setItem(i,0,firstRow);
-		i++;
+	    if(poins_started){
+			QStandardItem *firstRow = new QStandardItem(QString(line));
+			model->setItem(i,0,firstRow);
+			i++;
+	    }
+
+	    if(line.indexOf("Height(nm)") == 0){
+	    	poins_started = true;
+	    }
 	}
 
 	file.close();

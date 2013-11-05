@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Mon Nov 4 19:21:50 2013
+** Created: Tue Nov 5 08:24:21 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -37,7 +37,7 @@ public:
     QWidget *widget;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
-    GLWidget *widget_2;
+    GLWidget *modelView;
     QVBoxLayout *verticalLayout_2;
     QSpacerItem *verticalSpacer;
     QPushButton *startButton;
@@ -66,15 +66,15 @@ public:
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setSpacing(0);
     horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-    widget_2 = new GLWidget(widget);
-    widget_2->setObjectName(QString::fromUtf8("widget_2"));
+    modelView = new GLWidget(widget);
+    modelView->setObjectName(QString::fromUtf8("modelView"));
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
-    widget_2->setSizePolicy(sizePolicy);
+    sizePolicy.setHeightForWidth(modelView->sizePolicy().hasHeightForWidth());
+    modelView->setSizePolicy(sizePolicy);
 
-    horizontalLayout->addWidget(widget_2);
+    horizontalLayout->addWidget(modelView);
 
     verticalLayout_2 = new QVBoxLayout();
     verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));

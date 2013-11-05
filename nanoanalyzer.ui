@@ -33,7 +33,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="GLWidget" native="1" name="widget_2" >
+           <widget class="GLWidget" native="1" name="modelView" >
             <property name="sizePolicy" >
              <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
               <horstretch>0</horstretch>

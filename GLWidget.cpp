@@ -62,20 +62,19 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
   lastPos = event->pos();
 }
-
-void GLWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-	QMessageBox::information(this, "Hello World!", "Hi!");
-  int face = faceAtPosition(event->pos());
-  if (face != -1) {
-    QColor color = QColorDialog::getColor(faceColors[face],
-                                          this);
-    if (color.isValid()) {
-      faceColors[face] = color;
-      updateGL();
-    }
-  }
-}
+//
+//void GLWidget::mouseDoubleClickEvent(QMouseEvent *event)
+//{
+//  int face = faceAtPosition(event->pos());
+//  if (face != -1) {
+//    QColor color = QColorDialog::getColor(faceColors[face],
+//                                          this);
+//    if (color.isValid()) {
+//      faceColors[face] = color;
+//      updateGL();
+//    }
+//  }
+//}
 
 int GLWidget::faceAtPosition(const QPoint &pos)
 {
@@ -139,3 +138,8 @@ void GLWidget::draw(){
 	    glEnd();
 	  }
 }
+
+void GLWidget::setModelVector(QVector<float> *data_vector){
+	QMessageBox::information(0, "error", QString::number((*data_vector)[0]));
+}
+

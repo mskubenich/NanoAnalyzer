@@ -19,7 +19,8 @@ public:
 	void resizeGL(int w, int h);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
+//	void mouseDoubleClickEvent(QMouseEvent *event);
+	void setModelVector(QVector<float> *data_vector);
 
 private:
 	void draw();

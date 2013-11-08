@@ -20,7 +20,8 @@ public:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 //	void mouseDoubleClickEvent(QMouseEvent *event);
-	void setModelVector(QVector<float> *data_vector);
+	void setModelVector(QVector< QVector<float> > data_vector, int max, int min);
+	float changeCoordinate(float origin);
 
 private:
 	void draw();
@@ -30,6 +31,9 @@ private:
 	GLfloat rotationZ;
 	QColor faceColors[6];
 	QPoint lastPos;
+	QVector<QVector <float> > points;
+	float max_value;
+	float shouldpaint;
 };
 
 #endif /* GLWIDGET_H_ */

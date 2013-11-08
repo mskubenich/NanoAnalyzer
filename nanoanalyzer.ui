@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1096</width>
-    <height>953</height>
+    <width>802</width>
+    <height>526</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -23,6 +23,12 @@
        <enum>Qt::Vertical</enum>
       </property>
       <widget class="QWidget" native="1" name="widget" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_3" >
         <property name="margin" >
          <number>0</number>
@@ -64,14 +70,34 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_4" >
+             <widget class="QLabel" name="label_5" >
               <property name="text" >
-               <string>V(nm*2):</string>
+               <string>V(nm^2)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="v" >
+             <widget class="QLineEdit" name="positive_v" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_4" >
+              <property name="text" >
+               <string>-V(nm*2):</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="negative_v" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
@@ -150,17 +176,25 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableView" name="tableView" />
+      <widget class="QTableView" name="tableView" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
+   <zorder>splitter</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1096</width>
+     <width>802</width>
      <height>22</height>
     </rect>
    </property>

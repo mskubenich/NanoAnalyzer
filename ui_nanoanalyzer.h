@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Fri Nov 8 18:07:22 2013
+** Created: Fri Nov 8 18:51:25 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -42,8 +42,10 @@ public:
     GLWidget *modelView;
     QVBoxLayout *verticalLayout_2;
     QSpacerItem *verticalSpacer;
+    QLabel *label_5;
+    QLineEdit *positive_v;
     QLabel *label_4;
-    QLineEdit *v;
+    QLineEdit *negative_v;
     QLabel *label_3;
     QLineEdit *dy;
     QLabel *label_2;
@@ -60,7 +62,7 @@ public:
     if (NanoAnalyzerClass->objectName().isEmpty())
         NanoAnalyzerClass->setObjectName(QString::fromUtf8("NanoAnalyzerClass"));
     NanoAnalyzerClass->setWindowModality(Qt::ApplicationModal);
-    NanoAnalyzerClass->resize(1096, 953);
+    NanoAnalyzerClass->resize(802, 526);
     centralwidget = new QWidget(NanoAnalyzerClass);
     centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
     verticalLayout = new QVBoxLayout(centralwidget);
@@ -70,6 +72,11 @@ public:
     splitter->setOrientation(Qt::Vertical);
     widget = new QWidget(splitter);
     widget->setObjectName(QString::fromUtf8("widget"));
+    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    sizePolicy.setHorizontalStretch(0);
+    sizePolicy.setVerticalStretch(0);
+    sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+    widget->setSizePolicy(sizePolicy);
     verticalLayout_3 = new QVBoxLayout(widget);
     verticalLayout_3->setMargin(0);
     verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
@@ -78,11 +85,11 @@ public:
     horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
     modelView = new GLWidget(widget);
     modelView->setObjectName(QString::fromUtf8("modelView"));
-    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(modelView->sizePolicy().hasHeightForWidth());
-    modelView->setSizePolicy(sizePolicy);
+    QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    sizePolicy1.setHorizontalStretch(0);
+    sizePolicy1.setVerticalStretch(0);
+    sizePolicy1.setHeightForWidth(modelView->sizePolicy().hasHeightForWidth());
+    modelView->setSizePolicy(sizePolicy1);
 
     horizontalLayout->addWidget(modelView);
 
@@ -93,21 +100,34 @@ public:
 
     verticalLayout_2->addItem(verticalSpacer);
 
+    label_5 = new QLabel(widget);
+    label_5->setObjectName(QString::fromUtf8("label_5"));
+
+    verticalLayout_2->addWidget(label_5);
+
+    positive_v = new QLineEdit(widget);
+    positive_v->setObjectName(QString::fromUtf8("positive_v"));
+    positive_v->setEnabled(false);
+    QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    sizePolicy2.setHorizontalStretch(0);
+    sizePolicy2.setVerticalStretch(0);
+    sizePolicy2.setHeightForWidth(positive_v->sizePolicy().hasHeightForWidth());
+    positive_v->setSizePolicy(sizePolicy2);
+
+    verticalLayout_2->addWidget(positive_v);
+
     label_4 = new QLabel(widget);
     label_4->setObjectName(QString::fromUtf8("label_4"));
 
     verticalLayout_2->addWidget(label_4);
 
-    v = new QLineEdit(widget);
-    v->setObjectName(QString::fromUtf8("v"));
-    v->setEnabled(false);
-    QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    sizePolicy1.setHorizontalStretch(0);
-    sizePolicy1.setVerticalStretch(0);
-    sizePolicy1.setHeightForWidth(v->sizePolicy().hasHeightForWidth());
-    v->setSizePolicy(sizePolicy1);
+    negative_v = new QLineEdit(widget);
+    negative_v->setObjectName(QString::fromUtf8("negative_v"));
+    negative_v->setEnabled(false);
+    sizePolicy2.setHeightForWidth(negative_v->sizePolicy().hasHeightForWidth());
+    negative_v->setSizePolicy(sizePolicy2);
 
-    verticalLayout_2->addWidget(v);
+    verticalLayout_2->addWidget(negative_v);
 
     label_3 = new QLabel(widget);
     label_3->setObjectName(QString::fromUtf8("label_3"));
@@ -116,11 +136,11 @@ public:
 
     dy = new QLineEdit(widget);
     dy->setObjectName(QString::fromUtf8("dy"));
-    QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Fixed);
-    sizePolicy2.setHorizontalStretch(0);
-    sizePolicy2.setVerticalStretch(0);
-    sizePolicy2.setHeightForWidth(dy->sizePolicy().hasHeightForWidth());
-    dy->setSizePolicy(sizePolicy2);
+    QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Fixed);
+    sizePolicy3.setHorizontalStretch(0);
+    sizePolicy3.setVerticalStretch(0);
+    sizePolicy3.setHeightForWidth(dy->sizePolicy().hasHeightForWidth());
+    dy->setSizePolicy(sizePolicy3);
 
     verticalLayout_2->addWidget(dy);
 
@@ -131,8 +151,8 @@ public:
 
     dx = new QLineEdit(widget);
     dx->setObjectName(QString::fromUtf8("dx"));
-    sizePolicy1.setHeightForWidth(dx->sizePolicy().hasHeightForWidth());
-    dx->setSizePolicy(sizePolicy1);
+    sizePolicy2.setHeightForWidth(dx->sizePolicy().hasHeightForWidth());
+    dx->setSizePolicy(sizePolicy2);
 
     verticalLayout_2->addWidget(dx);
 
@@ -143,8 +163,8 @@ public:
 
     rowPointsCount = new QLineEdit(widget);
     rowPointsCount->setObjectName(QString::fromUtf8("rowPointsCount"));
-    sizePolicy1.setHeightForWidth(rowPointsCount->sizePolicy().hasHeightForWidth());
-    rowPointsCount->setSizePolicy(sizePolicy1);
+    sizePolicy2.setHeightForWidth(rowPointsCount->sizePolicy().hasHeightForWidth());
+    rowPointsCount->setSizePolicy(sizePolicy2);
 
     verticalLayout_2->addWidget(rowPointsCount);
 
@@ -162,14 +182,20 @@ public:
     splitter->addWidget(widget);
     tableView = new QTableView(splitter);
     tableView->setObjectName(QString::fromUtf8("tableView"));
+    QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    sizePolicy4.setHorizontalStretch(0);
+    sizePolicy4.setVerticalStretch(0);
+    sizePolicy4.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+    tableView->setSizePolicy(sizePolicy4);
     splitter->addWidget(tableView);
 
     verticalLayout->addWidget(splitter);
 
     NanoAnalyzerClass->setCentralWidget(centralwidget);
+    splitter->raise();
     menubar = new QMenuBar(NanoAnalyzerClass);
     menubar->setObjectName(QString::fromUtf8("menubar"));
-    menubar->setGeometry(QRect(0, 0, 1096, 22));
+    menubar->setGeometry(QRect(0, 0, 802, 22));
     NanoAnalyzerClass->setMenuBar(menubar);
     statusbar = new QStatusBar(NanoAnalyzerClass);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -183,7 +209,8 @@ public:
     void retranslateUi(QMainWindow *NanoAnalyzerClass)
     {
     NanoAnalyzerClass->setWindowTitle(QApplication::translate("NanoAnalyzerClass", "NanoAnalyzer", 0, QApplication::UnicodeUTF8));
-    label_4->setText(QApplication::translate("NanoAnalyzerClass", "V(nm*2):", 0, QApplication::UnicodeUTF8));
+    label_5->setText(QApplication::translate("NanoAnalyzerClass", "V(nm^2)", 0, QApplication::UnicodeUTF8));
+    label_4->setText(QApplication::translate("NanoAnalyzerClass", "-V(nm*2):", 0, QApplication::UnicodeUTF8));
     label_3->setText(QApplication::translate("NanoAnalyzerClass", "dX(nm):", 0, QApplication::UnicodeUTF8));
     label_2->setText(QApplication::translate("NanoAnalyzerClass", "dY(nm):", 0, QApplication::UnicodeUTF8));
     label->setText(QApplication::translate("NanoAnalyzerClass", "Step:", 0, QApplication::UnicodeUTF8));

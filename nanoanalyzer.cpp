@@ -62,13 +62,15 @@ void NanoAnalyzer::on_startButton_clicked()
 		if(ui.dy->text() != "" ){
 			dy = ui.dy->text().toFloat();
 		}
-		float v = 0;
+		float positive_v = 0;
+		float negative_v = 0;
 		int j = 0;
 
 		while(!in.atEnd()) {
 			if(poins_started){
 				QVector<float> row;
-				float row_v = 0;
+				float positive_row_v = 0;
+				float negative_row_v = 0;
 				for(int i = 0; i < rowPointsCount; i++){
 					if(in.atEnd()){
 						row.push_back(0.0);
@@ -85,7 +87,11 @@ void NanoAnalyzer::on_startButton_clicked()
 						QStandardItem *x_cell = new QStandardItem(QString::number(i*dx));
 						model->setItem(((j*rowPointsCount) + i),0,x_cell);
 
-						row_v += dx * point;
+						if(point > 0){
+							positive_row_v += dx * point;
+						}else{
+							negative_row_v += dx * point;
+						}
 
 						if(point > max_z){
 							max_z = point;
@@ -97,7 +103,8 @@ void NanoAnalyzer::on_startButton_clicked()
 					}
 				}
 				j += 1;
-				v += row_v * dy;
+				positive_v += positive_row_v * dy;
+				negative_v += negative_row_v * dy;
 				data_vector.push_back(row);
 			}else{
 				QString line = in.readLine();
@@ -111,7 +118,8 @@ void NanoAnalyzer::on_startButton_clicked()
 		file.close();
 
 	//	ui.tableView->setModel(model);
-		ui.v->setText(QString::number(v));
+		ui.positive_v->setText(QString::number(positive_v));
+		ui.negative_v->setText(QString::number(negative_v));
 		ui.modelView->setModelVector(data_vector, max_z, min_z);
 
 		ui.tableView->setModel(model);

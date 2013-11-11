@@ -11,7 +11,7 @@ NanoAnalyzer::NanoAnalyzer(QWidget *parent)
     : QMainWindow(parent)
 {
 	ui.setupUi(this);
-	ui.rowPointsCount->setValidator( new QIntValidator(0, 100, this) );
+	ui.rowPointsCount->setValidator( new QIntValidator(0, 10000, this) );
 	ui.dx->setValidator( new QDoubleValidator(-999.0, 999.0, 6, this) );
 	ui.dy->setValidator( new QDoubleValidator(-999.0, 999.0, 6, this) );
 }

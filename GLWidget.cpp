@@ -48,7 +48,7 @@ void GLWidget::resizeGL(int w, int h){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	GLfloat x = (GLfloat)w / h;
-	glFrustum(-x, x, -1.0, 1.0, 4.0, 15.0);
+	glFrustum(-x, x, -1.0, 1.0, 6.0, 15.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 

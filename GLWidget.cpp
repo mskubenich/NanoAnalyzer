@@ -23,19 +23,42 @@ GLWidget::GLWidget(QWidget *parent) :
 }
 
 void GLWidget::initializeGL(){
-	glClearColor(0.2, 0.2, 0.2, 1);
+	glClearColor(0, 0, 0, 1);
 	glShadeModel(GL_FLAT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	  glPolygonMode(GL_BACK,GL_LINE);
-	  glPolygonMode(GL_FRONT,GL_LINE);
-	  glColor3f(0, 1,0);
-//	glEnable(GL_LIGHTING);
-//	glEnable (GL_LIGHT0);
-//
-//	float ambient[4] = {0.5, 0.5, 0.5, 1};
-//	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
-//	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+
+
+	glLoadIdentity();
+	//glOrtho(-50,50,-50,50,-2000,2000);
+	gluPerspective(75,1,50,2000);
+
+	glMatrixMode(GL_MODELVIEW);
+
+	//Enabling the shading model
+	glEnable(GL_LIGHTING);
+
+	//Enabling normal vector normalization
+	glEnable(GL_NORMALIZE);
+
+	//Disabling global ambient light (In this example no ambient light will be present.)
+	GLfloat globalAmbient[]={0,0,0};
+	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
+//	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,globalAmbient);
+
+	//Defining the position of the point light source GL_LIGHT0 at (x,y,z)=(0,0,40)
+	GLfloat light0Position[]={-30,-30,90,1};
+	glLightfv(GL_LIGHT0,GL_POSITION,light0Position);
+
+	//Defining "diffuse" lighting properties for GL_LIGHT0
+	GLfloat light0Diffuse[]={1,1,1};
+	glLightfv(GL_LIGHT0,GL_DIFFUSE,light0Diffuse);
+
+	//Defining "specular" lighting properties for GL_LIGHT0
+	GLfloat light0Specular[]={1,1,1};
+	glLightfv(GL_LIGHT0,GL_SPECULAR,light0Specular);
+
+	glEnable(GL_LIGHT0);
 }
 
 void GLWidget::paintGL(){
@@ -112,15 +135,76 @@ int GLWidget::faceAtPosition(const QPoint &pos)
   return buffer[3];
 }
 
+void GLWidget::drawAxes(){
+
+	glPolygonMode(GL_BACK,GL_LINE);
+	glPolygonMode(GL_FRONT,GL_LINE);
+	glColor3f(0, 0, 1);
+//	bottom
+	glBegin(GL_POLYGON);
+		glVertex3f(-1, -1, -1);
+		glVertex3f( 1, -1, -1);
+		glVertex3f( 1,  1, -1);
+		glVertex3f(-1,  1, -1);
+	glEnd();
+//	front
+	glBegin(GL_POLYGON);
+		glVertex3f(-1,  1, -1);
+		glVertex3f(-1,  1,  1);
+		glVertex3f( 1,  1,  1);
+		glVertex3f( 1,  1, -1);
+	glEnd();
+//	top
+	glBegin(GL_POLYGON);
+		glVertex3f(-1, -1,  1);
+		glVertex3f( 1, -1,  1);
+		glVertex3f( 1,  1,  1);
+		glVertex3f(-1,  1,  1);
+	glEnd();
+	//	back
+	glBegin(GL_POLYGON);
+		glVertex3f(-1, -1, -1);
+		glVertex3f( 1, -1, -1);
+		glVertex3f( 1, -1,  1);
+		glVertex3f(-1, -1,  1);
+	glEnd();
+	//	xy
+	glBegin(GL_POLYGON);
+		glVertex3f(-1, -1, 0);
+		glVertex3f( 1, -1, 0);
+		glVertex3f( 1,  1, 0);
+		glVertex3f(-1,  1, 0);
+	glEnd();
+
+
+}
+
 void GLWidget::draw(){
 	if(shouldpaint){
 
-		  glMatrixMode(GL_MODELVIEW);
-		  glLoadIdentity();
-		  glTranslatef(0.0, 0.0, -10.0);
-		  glRotatef(rotationX, 1.0, 0.0, 0.0);
-		  glRotatef(rotationY, 0.0, 1.0, 0.0);
-		  glRotatef(rotationZ, 0.0, 0.0, 1.0);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef(0.0, 0.0, -10.0);
+		glRotatef(rotationX, 1.0, 0.0, 0.0);
+		glRotatef(rotationY, 0.0, 1.0, 0.0);
+		glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+		if(QString::compare(drawtype, "points") == 0){
+			glPolygonMode(GL_BACK,GL_POINT);
+			glPolygonMode(GL_FRONT,GL_POINT);
+		}
+		if(QString::compare(drawtype, "lines") == 0){
+			glPolygonMode(GL_BACK,GL_LINE);
+			glPolygonMode(GL_FRONT,GL_LINE);
+		}
+		if(QString::compare(drawtype, "shade") == 0){
+			glPolygonMode(GL_BACK,GL_FILL);
+			glPolygonMode(GL_FRONT,GL_FILL);
+		}
+
+		glColor3f(0, 1, 0);
+
+		glDisable(GL_CULL_FACE);
 
 		  float ambient[4] = {0.5, 0.5, 0.5, 1};
 		  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
@@ -130,10 +214,10 @@ void GLWidget::draw(){
 
 		  float y = y_step - 1;
 		  int i = 1;
-		  while(y < 0.9){
+		  while(y < 1){
 			  float x = x_step - 1;
 			  int j = 1;
-			  while(x < 0.9){
+			  while(x < 1){
 
 				  float z = 0.0;
 				  if(i < points.size() && j < points[0].size()){
@@ -179,25 +263,21 @@ void GLWidget::draw(){
 					  previous_xy_z = -1;
 				  }
 
-				  glDisable(GL_CULL_FACE);
 
 //				  a = x_step , 0,                z - previous_x_z)
 //				  b = x_step , Y_step, z - previous_xy_z)
 
 
-
 				  glBegin(GL_TRIANGLES);
-//				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
+				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
   		    	  glVertex3f(x,          y,          z            );
   		    	  glVertex3f(x - x_step, y,          previous_x_z );
   		    	  glVertex3f(x - x_step, y - y_step, previous_xy_z);
 				  glEnd();
-//
-//				  glMaterialfv(GL_FRONT, GL_DIFFUSE, front_color);
-//				  glMaterialfv(GL_BACK, GL_DIFFUSE, back_color);
-				  glDisable(GL_CULL_FACE);
+
 				  glBegin(GL_TRIANGLES);
 //				  glNormal3f( ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
+//				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
   		    	  glVertex3f(x,          y         , z            );
   		    	  glVertex3f(x - x_step, y - y_step, previous_xy_z);
   		    	  glVertex3f(x         , y - y_step, previous_y_z );
@@ -210,11 +290,12 @@ void GLWidget::draw(){
 			  i += 1;
 		  }
 
-
+//		  drawAxes();
 	}
 }
 
-void GLWidget::setModelVector(QVector< QVector<float> > data_vector, int max, int min){
+void GLWidget::setModelVector(QVector< QVector<float> > data_vector, int max, int min, QString thedrawtype){
+	drawtype = thedrawtype;
 	points = data_vector;
 
 	float mod_max = (max > 0) ? max : -max;

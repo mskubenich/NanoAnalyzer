@@ -14,6 +14,7 @@ NanoAnalyzer::NanoAnalyzer(QWidget *parent)
 	ui.rowPointsCount->setValidator( new QIntValidator(0, 10000, this) );
 	ui.dx->setValidator( new QDoubleValidator(-999.0, 999.0, 6, this) );
 	ui.dy->setValidator( new QDoubleValidator(-999.0, 999.0, 6, this) );
+	fileName = "";
 }
 
 NanoAnalyzer::~NanoAnalyzer()
@@ -21,11 +22,8 @@ NanoAnalyzer::~NanoAnalyzer()
 
 }
 
-void NanoAnalyzer::on_startButton_clicked()
+void NanoAnalyzer::on_drawButton_clicked()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-	                                                 "",
-	                                                 tr("Files (*.*)"));
 
 	QStandardItemModel *model = new QStandardItemModel(200,3,this);
 	model->setHorizontalHeaderItem(0, new QStandardItem(QString("x(nm)")));
@@ -120,8 +118,26 @@ void NanoAnalyzer::on_startButton_clicked()
 	//	ui.tableView->setModel(model);
 		ui.positive_v->setText(QString::number(positive_v));
 		ui.negative_v->setText(QString::number(negative_v));
-		ui.modelView->setModelVector(data_vector, max_z, min_z);
+		QString drawtype = "lines";
+		if(ui.points_view->isChecked()){
+			drawtype = "points";
+		}
+		if(ui.lines_view->isChecked()){
+			drawtype = "lines";
+		}
+		if(ui.shade_view->isChecked()){
+			drawtype = "shade";
+		}
+		ui.modelView->setModelVector(data_vector, max_z, min_z, drawtype);
 
 		ui.tableView->setModel(model);
 	}
+}
+
+void NanoAnalyzer::on_selectFileButton_clicked(){
+	fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+		                                                 "",
+		                                                 tr("Files (*.*)"));
+
+
 }

@@ -13,10 +13,12 @@ public:
     ~NanoAnalyzer();
 
 private slots:
-    void on_startButton_clicked();
+    void on_drawButton_clicked();
+    void on_selectFileButton_clicked();
 
 private:
     Ui::NanoAnalyzerClass ui;
+	QString fileName;
 };
 
 #endif // NANOANALYZER_H

@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>802</width>
-    <height>526</height>
+    <width>1298</width>
+    <height>836</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -56,19 +56,6 @@
             <property name="rightMargin" >
              <number>0</number>
             </property>
-            <item>
-             <spacer name="verticalSpacer" >
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item>
              <widget class="QLabel" name="label_5" >
               <property name="text" >
@@ -164,9 +151,81 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="startButton" >
+             <widget class="QGroupBox" name="groupBox" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+                <horstretch>0</horstretch>
+                <verstretch>11</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title" >
+               <string>View</string>
+              </property>
+              <widget class="QRadioButton" name="points_view" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>10</y>
+                 <width>84</width>
+                 <height>18</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>points</string>
+               </property>
+              </widget>
+              <widget class="QRadioButton" name="lines_view" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>30</y>
+                 <width>84</width>
+                 <height>18</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>lines</string>
+               </property>
+              </widget>
+              <widget class="QRadioButton" name="shade_view" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>50</y>
+                 <width>84</width>
+                 <height>18</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>shade</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2" >
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="selectFileButton" >
               <property name="text" >
-               <string>PushButton</string>
+               <string>Select File</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="drawButton" >
+              <property name="text" >
+               <string>Redraw</string>
               </property>
              </widget>
             </item>
@@ -187,14 +246,13 @@
      </widget>
     </item>
    </layout>
-   <zorder>splitter</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>802</width>
+     <width>1298</width>
      <height>22</height>
     </rect>
    </property>

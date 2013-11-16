@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Fri Nov 8 21:24:51 2013
+** Created: Sat Nov 16 15:12:03 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -14,12 +14,14 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QRadioButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QSplitter>
 #include <QtGui/QStatusBar>
@@ -41,7 +43,6 @@ public:
     QHBoxLayout *horizontalLayout;
     GLWidget *modelView;
     QVBoxLayout *verticalLayout_2;
-    QSpacerItem *verticalSpacer;
     QLabel *label_5;
     QLineEdit *positive_v;
     QLabel *label_4;
@@ -52,7 +53,13 @@ public:
     QLineEdit *dx;
     QLabel *label;
     QLineEdit *rowPointsCount;
-    QPushButton *startButton;
+    QGroupBox *groupBox;
+    QRadioButton *points_view;
+    QRadioButton *lines_view;
+    QRadioButton *shade_view;
+    QSpacerItem *verticalSpacer_2;
+    QPushButton *selectFileButton;
+    QPushButton *drawButton;
     QTableView *tableView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -62,7 +69,7 @@ public:
     if (NanoAnalyzerClass->objectName().isEmpty())
         NanoAnalyzerClass->setObjectName(QString::fromUtf8("NanoAnalyzerClass"));
     NanoAnalyzerClass->setWindowModality(Qt::ApplicationModal);
-    NanoAnalyzerClass->resize(802, 526);
+    NanoAnalyzerClass->resize(1298, 836);
     centralwidget = new QWidget(NanoAnalyzerClass);
     centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
     verticalLayout = new QVBoxLayout(centralwidget);
@@ -96,10 +103,6 @@ public:
     verticalLayout_2 = new QVBoxLayout();
     verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
     verticalLayout_2->setContentsMargins(10, -1, 0, -1);
-    verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-    verticalLayout_2->addItem(verticalSpacer);
-
     label_5 = new QLabel(widget);
     label_5->setObjectName(QString::fromUtf8("label_5"));
 
@@ -168,10 +171,38 @@ public:
 
     verticalLayout_2->addWidget(rowPointsCount);
 
-    startButton = new QPushButton(widget);
-    startButton->setObjectName(QString::fromUtf8("startButton"));
+    groupBox = new QGroupBox(widget);
+    groupBox->setObjectName(QString::fromUtf8("groupBox"));
+    QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    sizePolicy4.setHorizontalStretch(0);
+    sizePolicy4.setVerticalStretch(11);
+    sizePolicy4.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+    groupBox->setSizePolicy(sizePolicy4);
+    points_view = new QRadioButton(groupBox);
+    points_view->setObjectName(QString::fromUtf8("points_view"));
+    points_view->setGeometry(QRect(10, 10, 84, 18));
+    lines_view = new QRadioButton(groupBox);
+    lines_view->setObjectName(QString::fromUtf8("lines_view"));
+    lines_view->setGeometry(QRect(10, 30, 84, 18));
+    shade_view = new QRadioButton(groupBox);
+    shade_view->setObjectName(QString::fromUtf8("shade_view"));
+    shade_view->setGeometry(QRect(10, 50, 84, 18));
 
-    verticalLayout_2->addWidget(startButton);
+    verticalLayout_2->addWidget(groupBox);
+
+    verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+    verticalLayout_2->addItem(verticalSpacer_2);
+
+    selectFileButton = new QPushButton(widget);
+    selectFileButton->setObjectName(QString::fromUtf8("selectFileButton"));
+
+    verticalLayout_2->addWidget(selectFileButton);
+
+    drawButton = new QPushButton(widget);
+    drawButton->setObjectName(QString::fromUtf8("drawButton"));
+
+    verticalLayout_2->addWidget(drawButton);
 
 
     horizontalLayout->addLayout(verticalLayout_2);
@@ -182,20 +213,19 @@ public:
     splitter->addWidget(widget);
     tableView = new QTableView(splitter);
     tableView->setObjectName(QString::fromUtf8("tableView"));
-    QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    sizePolicy4.setHorizontalStretch(0);
-    sizePolicy4.setVerticalStretch(0);
-    sizePolicy4.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
-    tableView->setSizePolicy(sizePolicy4);
+    QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    sizePolicy5.setHorizontalStretch(0);
+    sizePolicy5.setVerticalStretch(0);
+    sizePolicy5.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+    tableView->setSizePolicy(sizePolicy5);
     splitter->addWidget(tableView);
 
     verticalLayout->addWidget(splitter);
 
     NanoAnalyzerClass->setCentralWidget(centralwidget);
-    splitter->raise();
     menubar = new QMenuBar(NanoAnalyzerClass);
     menubar->setObjectName(QString::fromUtf8("menubar"));
-    menubar->setGeometry(QRect(0, 0, 802, 22));
+    menubar->setGeometry(QRect(0, 0, 1298, 22));
     NanoAnalyzerClass->setMenuBar(menubar);
     statusbar = new QStatusBar(NanoAnalyzerClass);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -215,7 +245,12 @@ public:
     label_2->setText(QApplication::translate("NanoAnalyzerClass", "dY(nm):", 0, QApplication::UnicodeUTF8));
     label->setText(QApplication::translate("NanoAnalyzerClass", "Step:", 0, QApplication::UnicodeUTF8));
     rowPointsCount->setInputMask(QString());
-    startButton->setText(QApplication::translate("NanoAnalyzerClass", "PushButton", 0, QApplication::UnicodeUTF8));
+    groupBox->setTitle(QApplication::translate("NanoAnalyzerClass", "View", 0, QApplication::UnicodeUTF8));
+    points_view->setText(QApplication::translate("NanoAnalyzerClass", "points", 0, QApplication::UnicodeUTF8));
+    lines_view->setText(QApplication::translate("NanoAnalyzerClass", "lines", 0, QApplication::UnicodeUTF8));
+    shade_view->setText(QApplication::translate("NanoAnalyzerClass", "shade", 0, QApplication::UnicodeUTF8));
+    selectFileButton->setText(QApplication::translate("NanoAnalyzerClass", "Select File", 0, QApplication::UnicodeUTF8));
+    drawButton->setText(QApplication::translate("NanoAnalyzerClass", "Redraw", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi
 

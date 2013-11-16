@@ -19,12 +19,12 @@ public:
 	void resizeGL(int w, int h);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-//	void mouseDoubleClickEvent(QMouseEvent *event);
-	void setModelVector(QVector< QVector<float> > data_vector, int max, int min);
-	float changeCoordinate(float origin);
+	void setModelVector(QVector< QVector<float> > data_vector, int max, int min, QString drawtype);
 
 private:
+	QString drawtype;
 	void draw();
+	void drawAxes();
 	int faceAtPosition(const QPoint &pos);
 	GLfloat rotationX;
 	GLfloat rotationY;

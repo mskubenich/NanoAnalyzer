@@ -44,6 +44,10 @@ void NanoAnalyzer::on_drawButton_clicked()
 
 		bool poins_started = false;
 
+		float max_x = 0;
+		float min_x = 0;
+		float max_y = 0;
+		float min_y = 0;
 		float max_z = 0;
 		float min_z = 0;
 
@@ -91,6 +95,18 @@ void NanoAnalyzer::on_drawButton_clicked()
 							negative_row_v += dx * point;
 						}
 
+						if(point > max_x){
+							max_x = point;
+						}
+						if(point < min_x){
+							min_x = point;
+						}
+						if(point > max_y){
+							max_y = point;
+						}
+						if(point < min_y){
+							min_y = point;
+						}
 						if(point > max_z){
 							max_z = point;
 						}
@@ -128,7 +144,7 @@ void NanoAnalyzer::on_drawButton_clicked()
 		if(ui.shade_view->isChecked()){
 			drawtype = "shade";
 		}
-		ui.modelView->setModelVector(data_vector, max_z, min_z, drawtype);
+		ui.modelView->setModelVector(data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx, dy, drawtype);
 
 		ui.tableView->setModel(model);
 	}

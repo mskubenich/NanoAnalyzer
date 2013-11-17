@@ -206,105 +206,129 @@ void GLWidget::draw(){
 
 		glDisable(GL_CULL_FACE);
 
-		  float ambient[4] = {0.5, 0.5, 0.5, 1};
-		  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
-
-		  float x_step = 2.0 / points.size();
-		  float y_step = 2.0 / points[0].size();
-
-		  float y = y_step - 1;
-		  int i = 1;
-		  while(y < 1){
-			  float x = x_step - 1;
-			  int j = 1;
-			  while(x < 1){
-
-				  float z = 0.0;
-				  if(i < points.size() && j < points[0].size()){
-					  z = points[i][j]/max_value;
-				  }
-				  if(z > 1){
-					  z = 1;
-				  }
-				  if(z < -1){
-					  z = -1;
-				  }
-
-				  float previous_x_z = z;
-				  if(i < points.size() && (j - 1) < points[0].size()){
-					  previous_x_z = points[i][j - 1]/max_value;
-				  }
-				  if(previous_x_z > 1){
-					  previous_x_z = 1;
-				  }
-				  if(previous_x_z < -1){
-					  previous_x_z = -1;
-				  }
-
-				  float previous_y_z = z;
-				  if((i - 1) < points.size() && j < points[0].size()){
-					  previous_y_z = points[i - 1][j]/max_value;
-				  }
-				  if(previous_y_z > 1){
-					  previous_y_z = 1;
-				  }
-				  if(previous_y_z < -1){
-					  previous_y_z = -1;
-				  }
-
-				  float previous_xy_z = z;
-				  if((i - 1) < points.size() && (j - 1) < points[0].size()){
-					  previous_xy_z = points[i - 1][j - 1]/max_value;
-				  }
-				  if(previous_xy_z > 1){
-					  previous_xy_z = 1;
-				  }
-				  if(previous_xy_z < -1){
-					  previous_xy_z = -1;
-				  }
+		float ambient[4] = {0.5, 0.5, 0.5, 1};
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 
 
-//				  a = x_step , 0,                z - previous_x_z)
-//				  b = x_step , Y_step, z - previous_xy_z)
+		float x_interval = max_x - min_x;
+		float y_interval = max_y - min_y;
+		float z_interval = max_z - min_z;
 
+		if(x_interval < 0){
+			x_interval = x_interval * (-1);
+		}
+		if(y_interval < 0){
+			y_interval = y_interval * (-1);
+		}
+		if(z_interval < 0){
+			z_interval = z_interval * (-1);
+		}
 
-				  glBegin(GL_TRIANGLES);
-				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
-  		    	  glVertex3f(x,          y,          z            );
-  		    	  glVertex3f(x - x_step, y,          previous_x_z );
-  		    	  glVertex3f(x - x_step, y - y_step, previous_xy_z);
-				  glEnd();
+		float bigger = x_interval;
+		if(y_interval > bigger){
+			bigger = y_interval;
+		}
+		if(z_interval > bigger){
+			bigger = z_interval;
+		}
 
-				  glBegin(GL_TRIANGLES);
-//				  glNormal3f( ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
-//				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
-  		    	  glVertex3f(x,          y         , z            );
-  		    	  glVertex3f(x - x_step, y - y_step, previous_xy_z);
-  		    	  glVertex3f(x         , y - y_step, previous_y_z );
-				  glEnd();
+		float x_step = ((dx*bigger)/2) - 1 + min_x;
+		float y_step = ((dy*bigger)/2) - 1 + min_y;
 
-				  x += x_step;
-				  j += 1;
+		float y = y_step - 1;
+		int i = 1;
+		while(y < 1){
+		  float x = x_step - 1;
+		  int j = 1;
+		  while(x < 1){
+
+			  float z = 0.0;
+			  if(i < points.size() && j < points[0].size()){
+				  z = ((points[i][j]*bigger)/2) - 1 + min_z;
 			  }
-			  y += y_step;
-			  i += 1;
-		  }
+			  if(z > 1){
+				  z = 1;
+			  }
+			  if(z < -1){
+				  z = -1;
+			  }
 
-//		  drawAxes();
+			  float previous_x_z = z;
+			  if(i < points.size() && (j - 1) < points[0].size()){
+				  previous_x_z = ((points[i][j - 1]*bigger)/2) - 1 + min_z;
+			  }
+			  if(previous_x_z > 1){
+				  previous_x_z = 1;
+			  }
+			  if(previous_x_z < -1){
+				  previous_x_z = -1;
+			  }
+
+			  float previous_y_z = z;
+			  if((i - 1) < points.size() && j < points[0].size()){
+				  previous_y_z = ((points[i - 1][j]*bigger)/2) - 1 + min_z;
+			  }
+			  if(previous_y_z > 1){
+				  previous_y_z = 1;
+			  }
+			  if(previous_y_z < -1){
+				  previous_y_z = -1;
+			  }
+
+			  float previous_xy_z = z;
+			  if((i - 1) < points.size() && (j - 1) < points[0].size()){
+				  previous_xy_z = ((points[i - 1][j - 1]*bigger)/2) - 1 + min_z;
+			  }
+			  if(previous_xy_z > 1){
+				  previous_xy_z = 1;
+			  }
+			  if(previous_xy_z < -1){
+				  previous_xy_z = -1;
+			  }
+
+
+		//				  a = x_step , 0,                z - previous_x_z)
+		//				  b = x_step , Y_step, z - previous_xy_z)
+
+
+			  glBegin(GL_TRIANGLES);
+			  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
+			  glVertex3f(x,          y,          z            );
+			  glVertex3f(x - x_step, y,          previous_x_z );
+			  glVertex3f(x - x_step, y - y_step, previous_xy_z);
+			  glEnd();
+
+			  glBegin(GL_TRIANGLES);
+		//				  glNormal3f( ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
+		//				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
+			  glVertex3f(x,          y         , z            );
+			  glVertex3f(x - x_step, y - y_step, previous_xy_z);
+			  glVertex3f(x         , y - y_step, previous_y_z );
+			  glEnd();
+
+			  x += x_step;
+			  j += 1;
+		  }
+		  y += y_step;
+		  i += 1;
+		}
+
+		//		  drawAxes();
 	}
 }
 
-void GLWidget::setModelVector(QVector< QVector<float> > data_vector, int max, int min, QString thedrawtype){
+void GLWidget::setModelVector(QVector< QVector<float> > data_vector, int maxx, int minx, int maxy, int miny, int maxz, int minz, float d_x, float d_z, QString thedrawtype){
 	drawtype = thedrawtype;
 	points = data_vector;
 
-	float mod_max = (max > 0) ? max : -max;
-	float mod_min = (min > 0) ? min : -min;
-	if(mod_max > mod_min){
-		max_value = mod_max;
-	}else{
-		max_value = mod_min;
-	}
+	max_x = maxx;
+	min_x = minx;
+	max_x = maxy;
+	min_x = miny;
+	max_x = maxz;
+	min_x = minz;
+	dx = d_x;
+	dx = dy;
 //	QMessageBox::information(0, "error", QString::number(points.size()));
 //	QMessageBox::information(0, "error", QString::number((*points)[1]));
 //	QMessageBox::information(0, "error", QString::number((*points)[2]));
@@ -312,5 +336,6 @@ void GLWidget::setModelVector(QVector< QVector<float> > data_vector, int max, in
 	paintGL();
 	updateGL();
 }
+
 
 

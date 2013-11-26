@@ -13,9 +13,14 @@ public:
     ~NanoAnalyzer();
 
 private slots:
-    void on_drawButton_clicked();
+    void redraw();
     void on_selectFileButton_clicked();
-
+    void on_shade_view_clicked();
+    void on_lines_view_clicked();
+    void on_points_view_clicked();
+    void on_rowPointsCount_valueChanged(int value);
+    void on_dy_textChanged(QString str);
+    void on_dx_textChanged(QString str);
 private:
     Ui::NanoAnalyzerClass ui;
 	QString fileName;

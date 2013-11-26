@@ -19,7 +19,7 @@ public:
 	void resizeGL(int w, int h);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-	void setModelVector(QVector< QVector<float> > data_vector, int max_x, int min_x, int max_y, int min_y, int max_z, int min_z, float dx, float dz, QString drawtype);
+	void setModelVector(QVector< QVector<float> > data_vector, float max_x, float min_x, float max_y, float min_y, float max_z, float min_z, float dx, float dy, QString drawtype);
 
 private:
 	QString drawtype;

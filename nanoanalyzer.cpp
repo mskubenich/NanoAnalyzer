@@ -11,7 +11,6 @@ NanoAnalyzer::NanoAnalyzer(QWidget *parent)
     : QMainWindow(parent)
 {
 	ui.setupUi(this);
-	ui.rowPointsCount->setValidator( new QIntValidator(0, 10000, this) );
 	ui.dx->setValidator( new QDoubleValidator(-999.0, 999.0, 6, this) );
 	ui.dy->setValidator( new QDoubleValidator(-999.0, 999.0, 6, this) );
 	fileName = "";
@@ -22,7 +21,7 @@ NanoAnalyzer::~NanoAnalyzer()
 
 }
 
-void NanoAnalyzer::on_drawButton_clicked()
+void NanoAnalyzer::redraw()
 {
 
 	QStandardItemModel *model = new QStandardItemModel(200,3,this);
@@ -52,8 +51,8 @@ void NanoAnalyzer::on_drawButton_clicked()
 		float min_z = 0;
 
 		int rowPointsCount = 100;
-		if(ui.rowPointsCount->text() != "" ){
-			rowPointsCount = ui.rowPointsCount->text().toInt();
+		if(ui.rowPointsCount->value() > 0 ){
+			rowPointsCount = ui.rowPointsCount->value();
 		}
 
 		float dx = 0.1;
@@ -95,17 +94,19 @@ void NanoAnalyzer::on_drawButton_clicked()
 							negative_row_v += dx * point;
 						}
 
-						if(point > max_x){
-							max_x = point;
+						float coord_x = dx * (i + 1);
+						if( coord_x > max_x){
+							max_x = coord_x;
 						}
-						if(point < min_x){
-							min_x = point;
+						if( coord_x < min_x){
+							min_x = coord_x;
 						}
-						if(point > max_y){
-							max_y = point;
+						float coord_y = dy * (j + 1);
+						if(coord_y > max_y){
+							max_y = coord_y;
 						}
-						if(point < min_y){
-							min_y = point;
+						if(coord_y < min_y){
+							min_y = coord_y;
 						}
 						if(point > max_z){
 							max_z = point;
@@ -144,16 +145,50 @@ void NanoAnalyzer::on_drawButton_clicked()
 		if(ui.shade_view->isChecked()){
 			drawtype = "shade";
 		}
+
+//		QMessageBox::information(0, "max_x", QString::number(max_x));
+//		QMessageBox::information(0, "max_y", QString::number(max_y));
+//		QMessageBox::information(0, "max_z", QString::number(max_z));
+//		QMessageBox::information(0, "min_x", QString::number(min_x));
+//		QMessageBox::information(0, "min_y", QString::number(min_y));
+//		QMessageBox::information(0, "min_z", QString::number(min_z));
+
 		ui.modelView->setModelVector(data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx, dy, drawtype);
 
 		ui.tableView->setModel(model);
+
+
 	}
 }
 
 void NanoAnalyzer::on_selectFileButton_clicked(){
-	fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-		                                                 "",
-		                                                 tr("Files (*.*)"));
+	fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Files (*.*)"));
+	redraw();
+}
 
 
+void NanoAnalyzer::on_shade_view_clicked(){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_lines_view_clicked(){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_points_view_clicked(){
+	redraw();
+}
+
+void NanoAnalyzer::on_rowPointsCount_valueChanged(int value){
+	redraw();
+}
+
+void NanoAnalyzer::on_dy_textChanged(QString str){
+	redraw();
+}
+
+void NanoAnalyzer::on_dx_textChanged(QString str){
+	redraw();
 }

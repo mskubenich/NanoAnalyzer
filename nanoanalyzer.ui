@@ -138,17 +138,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="rowPointsCount" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="inputMask" >
-               <string/>
-              </property>
-             </widget>
+             <widget class="QSpinBox" name="rowPointsCount" />
             </item>
             <item>
              <widget class="QGroupBox" name="groupBox" >
@@ -219,13 +209,6 @@
              <widget class="QPushButton" name="selectFileButton" >
               <property name="text" >
                <string>Select File</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="drawButton" >
-              <property name="text" >
-               <string>Redraw</string>
               </property>
              </widget>
             </item>

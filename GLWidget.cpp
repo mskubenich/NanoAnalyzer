@@ -210,52 +210,104 @@ void GLWidget::draw(){
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 
 
-		float x_interval = max_x - min_x;
-		float y_interval = max_y - min_y;
-		float z_interval = max_z - min_z;
+		float bigger = 0;
+		float max_x_mod = max_x;
+		if(max_x_mod < 0){
+			max_x_mod = max_x_mod*(-1);
+		}
+		float min_x_mod = min_x;
+		if(min_x_mod < 0){
+			min_x_mod = max_x_mod*(-1);
+		}
+		float max_y_mod = max_y;
+		if(max_y_mod < 0){
+			max_y_mod = max_y_mod*(-1);
+		}
+		float min_y_mod = min_y;
+		if(min_y_mod < 0){
+			min_y_mod = max_y_mod*(-1);
+		}
+		float max_z_mod = max_z;
+		if(max_z_mod < 0){
+			max_z_mod = max_z_mod*(-1);
+		}
+		float min_z_mod = min_z;
+		if(min_z_mod < 0){
+			min_z_mod = max_z_mod*(-1);
+		}
 
-		if(x_interval < 0){
-			x_interval = x_interval * (-1);
+		if(max_x_mod > bigger){
+			bigger = max_x_mod;
 		}
-		if(y_interval < 0){
-			y_interval = y_interval * (-1);
+		if(min_x_mod > bigger){
+			bigger = min_x_mod;
 		}
-		if(z_interval < 0){
-			z_interval = z_interval * (-1);
+		if(max_y_mod > bigger){
+			bigger = max_y_mod;
+		}
+		if(min_y_mod > bigger){
+			bigger = min_y_mod;
+		}
+		if(max_z_mod > bigger){
+			bigger = max_z_mod;
+		}
+		if(min_z_mod > bigger){
+			bigger = min_z_mod;
 		}
 
-		float bigger = x_interval;
-		if(y_interval > bigger){
-			bigger = y_interval;
-		}
-		if(z_interval > bigger){
-			bigger = z_interval;
-		}
+		float x_step = ((dx)*2.0/bigger);
+		float y_step = ((dy)*2.0/bigger);
 
-		float x_step = ((dx*bigger)/2) - 1 + min_x;
-		float y_step = ((dy*bigger)/2) - 1 + min_y;
+		for(int i = 1; i < points.size(); i++){
 
-		float y = y_step - 1;
-		int i = 1;
-		while(y < 1){
-		  float x = x_step - 1;
-		  int j = 1;
-		  while(x < 1){
+		  float y = (i * y_step) - 1.0;
+
+//			QMessageBox::information(0, "y", QString::number(y));
+
+			if(y < -1){
+			  y = -1;
+			  break;
+		  }
+
+		  for(int j = 1; j < points[i].size(); j++){
+
+
+			  float x = (j * x_step) - 1.0;
 
 			  float z = 0.0;
 			  if(i < points.size() && j < points[0].size()){
-				  z = ((points[i][j]*bigger)/2) - 1 + min_z;
+				  z = ((points[i][j])/bigger);
 			  }
+
+
+//				QMessageBox::information(0, "x", QString::number(x));
+//				QMessageBox::information(0, "z", QString::number(z));
+
 			  if(z > 1){
 				  z = 1;
 			  }
 			  if(z < -1){
 				  z = -1;
+				  break;
+			  }
+			  if(x > 1){
+				  x = 1;
+			  }
+			  if(x < -1){
+				  x = -1;
+				  break;
+			  }
+			  if(y > 1){
+				  y = 1;
+			  }
+			  if(y < -1){
+				  y = -1;
+				  break;
 			  }
 
 			  float previous_x_z = z;
 			  if(i < points.size() && (j - 1) < points[0].size()){
-				  previous_x_z = ((points[i][j - 1]*bigger)/2) - 1 + min_z;
+				  previous_x_z = ((points[i][j - 1])/bigger);
 			  }
 			  if(previous_x_z > 1){
 				  previous_x_z = 1;
@@ -266,7 +318,7 @@ void GLWidget::draw(){
 
 			  float previous_y_z = z;
 			  if((i - 1) < points.size() && j < points[0].size()){
-				  previous_y_z = ((points[i - 1][j]*bigger)/2) - 1 + min_z;
+				  previous_y_z = ((points[i - 1][j])/bigger);
 			  }
 			  if(previous_y_z > 1){
 				  previous_y_z = 1;
@@ -277,7 +329,7 @@ void GLWidget::draw(){
 
 			  float previous_xy_z = z;
 			  if((i - 1) < points.size() && (j - 1) < points[0].size()){
-				  previous_xy_z = ((points[i - 1][j - 1]*bigger)/2) - 1 + min_z;
+				  previous_xy_z = ((points[i - 1][j - 1])/bigger);
 			  }
 			  if(previous_xy_z > 1){
 				  previous_xy_z = 1;
@@ -306,29 +358,25 @@ void GLWidget::draw(){
 			  glVertex3f(x         , y - y_step, previous_y_z );
 			  glEnd();
 
-			  x += x_step;
-			  j += 1;
 		  }
-		  y += y_step;
-		  i += 1;
 		}
 
-		//		  drawAxes();
+				  drawAxes();
 	}
 }
 
-void GLWidget::setModelVector(QVector< QVector<float> > data_vector, int maxx, int minx, int maxy, int miny, int maxz, int minz, float d_x, float d_z, QString thedrawtype){
+void GLWidget::setModelVector(QVector< QVector<float> > data_vector, float maxx, float minx, float maxy, float miny, float maxz, float minz, float d_x, float d_y, QString thedrawtype){
 	drawtype = thedrawtype;
 	points = data_vector;
 
 	max_x = maxx;
 	min_x = minx;
-	max_x = maxy;
-	min_x = miny;
-	max_x = maxz;
-	min_x = minz;
+	max_y = maxy;
+	min_y = miny;
+	max_z = maxz;
+	min_z = minz;
 	dx = d_x;
-	dx = dy;
+	dy = d_y;
 //	QMessageBox::information(0, "error", QString::number(points.size()));
 //	QMessageBox::information(0, "error", QString::number((*points)[1]));
 //	QMessageBox::information(0, "error", QString::number((*points)[2]));

@@ -23,12 +23,63 @@ NanoAnalyzer::~NanoAnalyzer()
 
 void NanoAnalyzer::redraw()
 {
+	QString extension = fileName.split(".").last();
+	if(QString::compare(extension, "csv") == 0){
+		draw_csv();
+	}else if(QString::compare(extension, "DAT") == 0){
+		draw_dat();
+	}
+}
 
+void NanoAnalyzer::on_selectFileButton_clicked(){
+	QString theFileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Files (*.*)"));
+	QString extension = theFileName.split(".").last();
+
+	if(QString::compare(extension, "csv") == 0){
+		fileName = theFileName;
+		redraw();
+	}else if(QString::compare(extension, "DAT") == 0){
+		fileName = theFileName;
+		redraw();
+	}
+}
+
+
+void NanoAnalyzer::on_shade_view_clicked(){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_lines_view_clicked(){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_points_view_clicked(){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_rowPointsCount_valueChanged(int value){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_dy_textChanged(QString str){
+	redraw();
+}
+
+
+void NanoAnalyzer::on_dx_textChanged(QString str){
+	redraw();
+}
+
+
+void NanoAnalyzer::draw_csv(){
 	QStandardItemModel *model = new QStandardItemModel(200,3,this);
 	model->setHorizontalHeaderItem(0, new QStandardItem(QString("x(nm)")));
 	model->setHorizontalHeaderItem(1, new QStandardItem(QString("y(nm)")));
 	model->setHorizontalHeaderItem(2, new QStandardItem(QString("z(nm)")));
-
 
 	if(fileName != ""){
 
@@ -132,7 +183,6 @@ void NanoAnalyzer::redraw()
 
 		file.close();
 
-	//	ui.tableView->setModel(model);
 		ui.positive_v->setText(QString::number(positive_v));
 		ui.negative_v->setText(QString::number(negative_v));
 		QString drawtype = "lines";
@@ -146,49 +196,90 @@ void NanoAnalyzer::redraw()
 			drawtype = "shade";
 		}
 
-//		QMessageBox::information(0, "max_x", QString::number(max_x));
-//		QMessageBox::information(0, "max_y", QString::number(max_y));
-//		QMessageBox::information(0, "max_z", QString::number(max_z));
-//		QMessageBox::information(0, "min_x", QString::number(min_x));
-//		QMessageBox::information(0, "min_y", QString::number(min_y));
-//		QMessageBox::information(0, "min_z", QString::number(min_z));
-
 		ui.modelView->setModelVector(data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx, dy, drawtype);
+
+		ui.tableView->setModel(model);
+	}
+}
+
+
+void NanoAnalyzer::draw_dat(){
+
+	QStandardItemModel *model = new QStandardItemModel(10,1,this);
+
+	if(fileName != ""){
+
+		QFile file(fileName);
+		if(!file.open(QIODevice::ReadOnly)) {
+			QMessageBox::information(0, "error", file.errorString());
+		}
+
+		QTextStream in(&file);
+
+		QVector< QVector<float> > data_vector = QVector< QVector<float> >();
+//
+//		float max_x = 0;
+//		float min_x = 0;
+//		float max_y = 0;
+//		float min_y = 0;
+//		float max_z = 0;
+//		float min_z = 0;
+//
+
+		float dy = 0.1;
+		if(ui.dy->text() != "" ){
+			dy = ui.dy->text().toFloat();
+		}
+
+		int j = 0;
+
+		while(!in.atEnd()) {
+			if(in.atEnd()){
+
+			}else{
+				if(j == 0){
+					QString row = in.readLine();
+					QStringList columns = row.split(", ");
+					int c = 0;
+					while(c < columns.size()){
+						model->setHorizontalHeaderItem(c, new QStandardItem(QString(columns.at(c))));
+						data_vector.push_back(QVector<float>());
+						c++;
+					}
+				}else{
+					QString row = in.readLine();
+					QStringList columns = row.split(", ");
+					int c = 0;
+					while(c < columns.size()){
+						float float_value = QString(columns.at(c)).replace(",", ".").toFloat();
+						QStandardItem *cell = new QStandardItem(QString::number(float_value));
+						model->setItem(j - 1, c, cell);
+						c++;
+					}
+				}
+			}
+			j += 1;
+		}
+
+		file.close();
+
+		QString drawtype = "lines";
+		if(ui.points_view->isChecked()){
+			drawtype = "points";
+		}
+		if(ui.lines_view->isChecked()){
+			drawtype = "lines";
+		}
+		if(ui.shade_view->isChecked()){
+			drawtype = "shade";
+		}
+
+//		QMessageBox::information(0, "max_x", QString::number(max_x));
+
+//		ui.modelView->setModelVector(data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx, dy, drawtype);
 
 		ui.tableView->setModel(model);
 
 
 	}
-}
-
-void NanoAnalyzer::on_selectFileButton_clicked(){
-	fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Files (*.*)"));
-	redraw();
-}
-
-
-void NanoAnalyzer::on_shade_view_clicked(){
-	redraw();
-}
-
-
-void NanoAnalyzer::on_lines_view_clicked(){
-	redraw();
-}
-
-
-void NanoAnalyzer::on_points_view_clicked(){
-	redraw();
-}
-
-void NanoAnalyzer::on_rowPointsCount_valueChanged(int value){
-	redraw();
-}
-
-void NanoAnalyzer::on_dy_textChanged(QString str){
-	redraw();
-}
-
-void NanoAnalyzer::on_dx_textChanged(QString str){
-	redraw();
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Tue Nov 26 20:18:00 2013
+** Created: Tue Nov 26 20:53:45 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -166,6 +166,8 @@ public:
 
     rowPointsCount = new QSpinBox(widget);
     rowPointsCount->setObjectName(QString::fromUtf8("rowPointsCount"));
+    rowPointsCount->setMinimum(1);
+    rowPointsCount->setMaximum(999);
 
     verticalLayout_2->addWidget(rowPointsCount);
 
@@ -234,9 +236,9 @@ public:
     NanoAnalyzerClass->setWindowTitle(QApplication::translate("NanoAnalyzerClass", "NanoAnalyzer", 0, QApplication::UnicodeUTF8));
     label_5->setText(QApplication::translate("NanoAnalyzerClass", "V(nm^2)", 0, QApplication::UnicodeUTF8));
     label_4->setText(QApplication::translate("NanoAnalyzerClass", "-V(nm*2):", 0, QApplication::UnicodeUTF8));
-    label_3->setText(QApplication::translate("NanoAnalyzerClass", "dX(nm):", 0, QApplication::UnicodeUTF8));
+    label_3->setText(QApplication::translate("NanoAnalyzerClass", "dX(nm)(for .csv only):", 0, QApplication::UnicodeUTF8));
     label_2->setText(QApplication::translate("NanoAnalyzerClass", "dY(nm):", 0, QApplication::UnicodeUTF8));
-    label->setText(QApplication::translate("NanoAnalyzerClass", "Step:", 0, QApplication::UnicodeUTF8));
+    label->setText(QApplication::translate("NanoAnalyzerClass", "Step(for .csv only):", 0, QApplication::UnicodeUTF8));
     groupBox->setTitle(QApplication::translate("NanoAnalyzerClass", "View", 0, QApplication::UnicodeUTF8));
     points_view->setText(QApplication::translate("NanoAnalyzerClass", "points", 0, QApplication::UnicodeUTF8));
     lines_view->setText(QApplication::translate("NanoAnalyzerClass", "lines", 0, QApplication::UnicodeUTF8));

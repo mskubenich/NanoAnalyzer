@@ -99,7 +99,7 @@
             <item>
              <widget class="QLabel" name="label_3" >
               <property name="text" >
-               <string>dX(nm):</string>
+               <string>dX(nm)(for .csv only):</string>
               </property>
              </widget>
             </item>
@@ -133,12 +133,19 @@
             <item>
              <widget class="QLabel" name="label" >
               <property name="text" >
-               <string>Step:</string>
+               <string>Step(for .csv only):</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="rowPointsCount" />
+             <widget class="QSpinBox" name="rowPointsCount" >
+              <property name="minimum" >
+               <number>1</number>
+              </property>
+              <property name="maximum" >
+               <number>999</number>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QGroupBox" name="groupBox" >

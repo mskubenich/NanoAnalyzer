@@ -20,6 +20,10 @@ public:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void setModelVector(QVector< QVector<float> > data_vector, float max_x, float min_x, float max_y, float min_y, float max_z, float min_z, float dx, float dy, QString drawtype);
+	void setDATModelVector(QVector< QVector<float> > data_vector, float max, float maxy, QString drawtype);
+
+	void drawCSV();
+	void drawDAT();
 
 private:
 	QString drawtype;
@@ -32,6 +36,7 @@ private:
 	QColor faceColors[6];
 	QPoint lastPos;
 	QVector<QVector <float> > points;
+	float absolute(float number);
 	float max_x;
 	float min_x;
 	float max_y;
@@ -42,6 +47,9 @@ private:
 	float dy;
 	float shouldpaint;
 
+	bool isDAT;
+
+	int nearestIndex(float value, QVector<float> data_array);
 };
 
 #endif /* GLWIDGET_H_ */

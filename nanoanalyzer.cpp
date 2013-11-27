@@ -217,22 +217,11 @@ void NanoAnalyzer::draw_dat(){
 		QTextStream in(&file);
 
 		QVector< QVector<float> > data_vector = QVector< QVector<float> >();
-//
-//		float max_x = 0;
-//		float min_x = 0;
-//		float max_y = 0;
-//		float min_y = 0;
-//		float max_z = 0;
-//		float min_z = 0;
-//
 
-		float dy = 0.1;
-		if(ui.dy->text() != "" ){
-			dy = ui.dy->text().toFloat();
-		}
+		float max = 0;
+		float maxy = 0;
 
 		int j = 0;
-
 		while(!in.atEnd()) {
 			if(in.atEnd()){
 
@@ -254,6 +243,26 @@ void NanoAnalyzer::draw_dat(){
 						float float_value = QString(columns.at(c)).replace(",", ".").toFloat();
 						QStandardItem *cell = new QStandardItem(QString::number(float_value));
 						model->setItem(j - 1, c, cell);
+						data_vector[c].push_back(float_value);
+
+						if(c%2 == 0){
+							float value_mod = float_value;
+							if(value_mod < 0){
+								value_mod = value_mod * -1;
+							}
+							if(value_mod > max){
+								max = value_mod;
+							}
+						}else{
+							float value_mod = float_value;
+							if(value_mod < 0){
+								value_mod = value_mod * -1;
+							}
+							if(value_mod > maxy){
+								maxy = value_mod;
+							}
+						}
+
 						c++;
 					}
 				}
@@ -273,10 +282,7 @@ void NanoAnalyzer::draw_dat(){
 		if(ui.shade_view->isChecked()){
 			drawtype = "shade";
 		}
-
-//		QMessageBox::information(0, "max_x", QString::number(max_x));
-
-//		ui.modelView->setModelVector(data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx, dy, drawtype);
+		ui.modelView->setDATModelVector(data_vector, max, maxy, drawtype);
 
 		ui.tableView->setModel(model);
 

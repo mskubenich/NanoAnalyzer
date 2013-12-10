@@ -9,6 +9,7 @@
 #define GLWIDGET_H_
 
 #include <QGLWidget>
+#include "ArcBall.h"
 
 class GLWidget : public QGLWidget {
 	Q_OBJECT
@@ -30,11 +31,7 @@ private:
 	void draw();
 	void drawAxes();
 	int faceAtPosition(const QPoint &pos);
-	GLfloat rotationX;
-	GLfloat rotationY;
-	GLfloat rotationZ;
 	QColor faceColors[6];
-	QPoint lastPos;
 	QVector<QVector <float> > points;
 	float absolute(float number);
 	float max_x;
@@ -50,6 +47,12 @@ private:
 	bool isDAT;
 
 	int nearestIndex(float value, QVector<float> data_array);
+
+	Matrix4fT Transform;
+	Matrix3fT LastRot;
+	Matrix3fT ThisRot;
+	ArcBallT* arc_ball;
+	Point2fT MousePt;
 };
 
 #endif /* GLWIDGET_H_ */

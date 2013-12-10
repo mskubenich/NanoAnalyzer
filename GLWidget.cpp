@@ -16,11 +16,23 @@
 GLWidget::GLWidget(QWidget *parent) :
 	QGLWidget(parent) {
 
-	  rotationX = 0.5;
-	  rotationY = 10;
-	  rotationZ = 15;
-	  shouldpaint = false;
-	  isDAT = false;
+	Matrix4fT init_transform =  { 1.0f, 0.0f, 0.0f, 0.0f,
+								  0.0f, 1.0f, 0.0f, 0.0f,
+								  0.0f, 0.0f, 1.0f, 0.0f,
+								  0.0f, 0.0f, 0.0f, 1.0f};
+	Transform = init_transform;
+	Matrix3fT init_lastRot  = { 1.0f, 0.0f, 0.0f,
+								 0.0f, 1.0f, 0.0f,
+								 0.0f, 0.0f, 1.0f};
+	LastRot = init_lastRot;
+	Matrix3fT init_thisRot  = { 1.0f, 0.0f, 0.0f,
+								 0.0f, 1.0f, 0.0f,
+								 0.0f, 0.0f, 1.0f};
+	ThisRot = init_thisRot;
+	arc_ball = new ArcBallT(640.0f, 480.0f);
+
+	shouldpaint = false;
+	isDAT = false;
 }
 
 void GLWidget::initializeGL(){
@@ -74,25 +86,31 @@ void GLWidget::resizeGL(int w, int h){
 	GLfloat x = (GLfloat)w / h;
 	glFrustum(-x, x, -1.0, 1.0, 6.0, 15.0);
 	glMatrixMode(GL_MODELVIEW);
+
+	arc_ball->setBounds((GLfloat)w, (GLfloat)h);
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-  lastPos = event->pos();
+	MousePt.s.X = event->x();
+	MousePt.s.Y = event->y();
+
+	LastRot = ThisRot;
+	arc_ball->click(&MousePt);
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+	MousePt.s.X = event->x();
+	MousePt.s.Y = event->y();
 
-  GLfloat dx = (GLfloat)(event->x() - lastPos.x()) / width();
-  GLfloat dy = (GLfloat)(event->y() - lastPos.y()) / height();
+	Quat4fT ThisQuat;
+	arc_ball->drag(&MousePt, &ThisQuat);
+	Matrix3fSetRotationFromQuat4f(&ThisRot, &ThisQuat);
+	Matrix3fMulMatrix3f(&ThisRot, &LastRot);
+	Matrix4fSetRotationFromMatrix3f(&Transform, &ThisRot);
 
-    rotationX += 180 * dy;
-    rotationY += 180 * dx;
     updateGL();
-
-  lastPos = event->pos();
-
 }
 
 //void GLWidget::mouseDoubleClickEvent(QMouseEvent *event)
@@ -120,16 +138,6 @@ int GLWidget::faceAtPosition(const QPoint &pos)
   glInitNames();
   glPushName(0);
   glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-  glLoadIdentity();
-  gluPickMatrix((GLdouble)pos.x(),
-                (GLdouble)(viewport[3] - pos.y()),
-                5.0, 5.0, viewport);
-  GLfloat x = (GLfloat)width() / height();
-  glFrustum(-x, x, -1.0, 1.0, 4.0, 15.0);
-  draw();
-  glMatrixMode(GL_PROJECTION);
-  glPopMatrix();
 
   if (!glRenderMode(GL_RENDER))
     return -1;
@@ -185,9 +193,9 @@ void GLWidget::draw(){
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glTranslatef(0.0, 0.0, -10.0);
-		glRotatef(rotationX, 1.0, 0.0, 0.0);
-		glRotatef(rotationY, 0.0, 1.0, 0.0);
-		glRotatef(rotationZ, 0.0, 0.0, 1.0);
+
+		glPushMatrix();
+		glMultMatrixf(Transform.M);
 
 		if(QString::compare(drawtype, "points") == 0){
 			glPolygonMode(GL_BACK,GL_POINT);
@@ -215,6 +223,7 @@ void GLWidget::draw(){
 			drawCSV();
 		}
 		drawAxes();
+		glPopMatrix();
 	}
 }
 

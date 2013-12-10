@@ -266,13 +266,12 @@ void GLWidget::setDATModelVector(QVector< QVector<float> > data_vector, float ma
 	i = 0;
 	while(i < data_vector.size()){
 		int j = 0;
-		float current_x = 0;
+		float current_x = -1;
 		while(j < data_vector[i].size()){
 			int index = nearestIndex(current_x, data_vector[i]);
 
-			calculated_points[i].push_back( (data_vector[i][index]/max)*2);
-			calculated_points[i+1].push_back( (data_vector[i + 1][index]/max));
-			qDebug() << "Hello";
+			calculated_points[i].push_back( ((data_vector[i][index]/max)*2) - 1);
+			calculated_points[i+1].push_back( (data_vector[i + 1][index]/max) - 1);
 
 			current_x = current_x + step_x;
 			j++;

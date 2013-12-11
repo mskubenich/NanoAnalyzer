@@ -113,37 +113,6 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     updateGL();
 }
 
-//void GLWidget::mouseDoubleClickEvent(QMouseEvent *event)
-//{
-//  int face = faceAtPosition(event->pos());
-//  if (face != -1) {
-//    QColor color = QColorDialog::getColor(faceColors[face],
-//                                          this);
-//    if (color.isValid()) {
-//      faceColors[face] = color;
-//      updateGL();
-//    }
-//  }
-//}
-
-int GLWidget::faceAtPosition(const QPoint &pos)
-{
-  const int MaxSize = 512;
-  GLuint buffer[MaxSize];
-  GLint viewport[4];
-
-  glGetIntegerv(GL_VIEWPORT, viewport);
-  glSelectBuffer(MaxSize, buffer);
-  glRenderMode(GL_SELECT);
-  glInitNames();
-  glPushName(0);
-  glMatrixMode(GL_PROJECTION);
-
-  if (!glRenderMode(GL_RENDER))
-    return -1;
-  return buffer[3];
-}
-
 void GLWidget::drawAxes(){
 
 	glPolygonMode(GL_BACK,GL_LINE);
@@ -240,9 +209,6 @@ void GLWidget::setModelVector(QVector< QVector<float> > data_vector, float maxx,
 	dx = d_x;
 	dy = d_y;
 	isDAT = false;
-//	QMessageBox::information(0, "error", QString::number(points.size()));
-//	QMessageBox::information(0, "error", QString::number((*points)[1]));
-//	QMessageBox::information(0, "error", QString::number((*points)[2]));
 	shouldpaint = true;
 	paintGL();
 	updateGL();
@@ -289,30 +255,12 @@ void GLWidget::setDATModelVector(QVector< QVector<float> > data_vector, float ma
 
 void GLWidget::drawCSV(){
 	float bigger = 0;
-	float max_x_mod = max_x;
-	if(max_x_mod < 0){
-		max_x_mod = max_x_mod*(-1);
-	}
-	float min_x_mod = min_x;
-	if(min_x_mod < 0){
-		min_x_mod = max_x_mod*(-1);
-	}
-	float max_y_mod = max_y;
-	if(max_y_mod < 0){
-		max_y_mod = max_y_mod*(-1);
-	}
-	float min_y_mod = min_y;
-	if(min_y_mod < 0){
-		min_y_mod = max_y_mod*(-1);
-	}
-	float max_z_mod = max_z;
-	if(max_z_mod < 0){
-		max_z_mod = max_z_mod*(-1);
-	}
-	float min_z_mod = min_z;
-	if(min_z_mod < 0){
-		min_z_mod = max_z_mod*(-1);
-	}
+	float max_x_mod = abs(max_x);
+	float min_x_mod = abs(min_x);
+	float max_y_mod = abs(max_y);
+	float min_y_mod = abs(min_y);
+	float max_z_mod = abs(max_z);
+	float min_z_mod = abs(min_z);
 
 	if(max_x_mod > bigger){
 		bigger = max_x_mod;
@@ -338,76 +286,30 @@ void GLWidget::drawCSV(){
 
 	for(int i = 1; i < points.size(); i++){
 
-	  float y = (i * y_step) - 1.0;
-
-		if(y < -1){
-		  y = -1;
-		  break;
-	  }
+	  float y = fit_to_size((i * y_step) - 1.0);
 
 	  for(int j = 1; j < points[i].size(); j++){
 
-
-		  float x = (j * x_step) - 1.0;
+		  float x = fit_to_size((j * x_step) - 1.0);
 
 		  float z = 0.0;
 		  if(i < points.size() && j < points[0].size()){
-			  z = ((points[i][j])/bigger);
-		  }
-
-		  if(z > 1){
-			  z = 1;
-		  }
-		  if(z < -1){
-			  z = -1;
-			  break;
-		  }
-		  if(x > 1){
-			  x = 1;
-		  }
-		  if(x < -1){
-			  x = -1;
-			  break;
-		  }
-		  if(y > 1){
-			  y = 1;
-		  }
-		  if(y < -1){
-			  y = -1;
-			  break;
+			  z = fit_to_size((points[i][j])/bigger);
 		  }
 
 		  float previous_x_z = z;
 		  if(i < points.size() && (j - 1) < points[0].size()){
-			  previous_x_z = ((points[i][j - 1])/bigger);
-		  }
-		  if(previous_x_z > 1){
-			  previous_x_z = 1;
-		  }
-		  if(previous_x_z < -1){
-			  previous_x_z = -1;
+			  previous_x_z = fit_to_size((points[i][j - 1])/bigger);
 		  }
 
 		  float previous_y_z = z;
 		  if((i - 1) < points.size() && j < points[0].size()){
-			  previous_y_z = ((points[i - 1][j])/bigger);
-		  }
-		  if(previous_y_z > 1){
-			  previous_y_z = 1;
-		  }
-		  if(previous_y_z < -1){
-			  previous_y_z = -1;
+			  previous_y_z = fit_to_size((points[i - 1][j])/bigger);
 		  }
 
 		  float previous_xy_z = z;
 		  if((i - 1) < points.size() && (j - 1) < points[0].size()){
-			  previous_xy_z = ((points[i - 1][j - 1])/bigger);
-		  }
-		  if(previous_xy_z > 1){
-			  previous_xy_z = 1;
-		  }
-		  if(previous_xy_z < -1){
-			  previous_xy_z = -1;
+			  previous_xy_z = fit_to_size((points[i - 1][j - 1])/bigger);
 		  }
 
 		  glBegin(GL_TRIANGLES);
@@ -418,8 +320,7 @@ void GLWidget::drawCSV(){
 		  glEnd();
 
 		  glBegin(GL_TRIANGLES);
-	//				  glNormal3f( ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
-	//				  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
+		  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
 		  glVertex3f(x,          y         , z            );
 		  glVertex3f(x - x_step, y - y_step, previous_xy_z);
 		  glVertex3f(x         , y - y_step, previous_y_z );
@@ -439,71 +340,28 @@ void GLWidget::drawDAT(){
 		int j = 1;
 		while(j < points[i].size()){
 
-			float x = points[i][j];
-			if(x < -1){
-				x = -1;
-			}else if(x > 1){
-				x = 1;
-			}
-			float y = current_y;
-			if(y < -1){
-				y = -1;
-			}else if(y > 1){
-				y = 1;
-			}
-			float z = (points[i+1][j] * max_x)/max_y;
-			if(z < -1){
-				z = -1;
-			}else if(z > 1){
-				z = 1;
-			}
+			float x = fit_to_size(points[i][j]);
+			float y = fit_to_size(current_y);
+			float z = fit_to_size((points[i+1][j] * max_x)/max_y);
 
-			float prev_x = points[i][j-1];
-			if(prev_x < -1){
-				prev_x = -1;
-			}else if(prev_x > 1){
-				prev_x = 1;
-			}
-			float prev_x_z = (points[i+1][j-1]*max_x)/max_y;
-			if(prev_x_z < -1){
-				prev_x_z = -1;
-			}else if(prev_x_z > 1){
-				prev_x_z = 1;
-			}
-			float prev_y_z = (points[i-1][j]*max_x)/max_y;
-			if(prev_y_z < -1){
-				prev_y_z = -1;
-			}else if(prev_y_z > 1){
-				prev_y_z = 1;
-			}
-			float prev_y = current_y - step_y;
-			if(prev_y < -1){
-				prev_y = -1;
-			}else if(prev_y > 1){
-				prev_y = 1;
-			}
-			float prev_xy_z = (points[i-1][j-1]*max_x)/max_y;
-			if(prev_xy_z < -1){
-				prev_xy_z = -1;
-			}else if(prev_xy_z > 1){
-				prev_xy_z = 1;
-			}
-
-//			a = (prev_x - x, 0,         prev_x_z - z)
-//			b = (prev_x -x , prev_y -y, prev_xy_z - z)
+			float prev_x    = fit_to_size(points[i][j-1]);
+			float prev_x_z  = fit_to_size((points[i+1][j-1]*max_x)/max_y);
+			float prev_y_z  = fit_to_size((points[i-1][j]*max_x)/max_y);
+			float prev_y    = fit_to_size(current_y - step_y);
+			float prev_xy_z = fit_to_size((points[i-1][j-1]*max_x)/max_y);
 
 			glBegin(GL_TRIANGLES);
 				glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
-				glVertex3f(x     , y,          z            );
-				glVertex3f(prev_x, y,          prev_x_z );
+				glVertex3f(x,      y,       z        );
+				glVertex3f(prev_x, y,       prev_x_z );
 				glVertex3f(prev_x, prev_y,  prev_xy_z);
 			glEnd();
 
 			glBegin(GL_TRIANGLES);
-			glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
-			glVertex3f(x,          y         , z            );
-			glVertex3f(prev_x, prev_y, prev_xy_z);
-			glVertex3f(x         , prev_y, prev_y_z );
+				glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
+				glVertex3f(x,      y,      z        );
+				glVertex3f(prev_x, prev_y, prev_xy_z);
+				glVertex3f(x,      prev_y, prev_y_z );
 			glEnd();
 
 			j++;
@@ -511,20 +369,15 @@ void GLWidget::drawDAT(){
 		current_y = current_y + step_y;
 		i = i+2;
 	}
-
-
-//	QMessageBox::information(0, "error", QString::number(l_x));
-
-
 }
 
 
 int GLWidget::nearestIndex(float value, QVector<float> data_array){
 	int index = 0;
-	float last_difference = absolute(value - data_array[0]);
+	float last_difference = abs(value - data_array[0]);
 	int i = 1;
 	while(i < data_array.size()){
-		float difference = absolute(value - data_array[i]);
+		float difference = abs(value - data_array[i]);
 		if(difference < last_difference){
 			last_difference = difference;
 			index = i;
@@ -534,10 +387,20 @@ int GLWidget::nearestIndex(float value, QVector<float> data_array){
 	return index;
 }
 
-float GLWidget::absolute(float number){
+float GLWidget::abs(float number){
     if (number < 0)
         return -number;
     else
         return number;
+}
+
+float GLWidget::fit_to_size(float number){
+	if(number < -1){
+		return -1.0;
+	}else if(number > 1){
+		return 1.0;
+	}else{
+		return number;
+	}
 }
 

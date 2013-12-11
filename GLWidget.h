@@ -30,10 +30,8 @@ private:
 	QString drawtype;
 	void draw();
 	void drawAxes();
-	int faceAtPosition(const QPoint &pos);
 	QColor faceColors[6];
 	QVector<QVector <float> > points;
-	float absolute(float number);
 	float max_x;
 	float min_x;
 	float max_y;
@@ -46,7 +44,9 @@ private:
 
 	bool isDAT;
 
+	float abs(float number);
 	int nearestIndex(float value, QVector<float> data_array);
+	float fit_to_size(float number);
 
 	Matrix4fT Transform;
 	Matrix3fT LastRot;

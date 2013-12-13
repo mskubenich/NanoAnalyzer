@@ -17,6 +17,7 @@ private slots:
     void draw_csv();
     void draw_dat();
     void on_selectFileButton_clicked();
+    void on_colorButton_clicked();
     void on_shade_view_clicked();
     void on_lines_view_clicked();
     void on_points_view_clicked();

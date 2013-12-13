@@ -5,7 +5,7 @@
 #include <qstandarditemmodel.h>
 #include <qtextstream.h>
 #include <QString>
-#include <QtDebug>
+#include <QColorDialog>
 
 NanoAnalyzer::NanoAnalyzer(QWidget *parent)
     : QMainWindow(parent)
@@ -42,6 +42,10 @@ void NanoAnalyzer::on_selectFileButton_clicked(){
 		fileName = theFileName;
 		redraw();
 	}
+}
+void NanoAnalyzer::on_colorButton_clicked(){
+	ui.modelView->color = QColorDialog::getColor(ui.modelView->color, this);
+	redraw();
 }
 
 

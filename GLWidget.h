@@ -26,6 +26,8 @@ public:
 	void drawCSV();
 	void drawDAT();
 
+	QColor color;
+
 private:
 	QString drawtype;
 	void draw();

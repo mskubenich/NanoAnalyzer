@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Wed Dec 11 17:13:02 2013
+** Created: Fri Dec 13 11:19:15 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -59,6 +59,7 @@ public:
     QRadioButton *lines_view;
     QRadioButton *shade_view;
     QSpacerItem *verticalSpacer_2;
+    QPushButton *colorButton;
     QPushButton *selectFileButton;
     QTableView *tableView;
     QMenuBar *menubar;
@@ -194,6 +195,11 @@ public:
 
     verticalLayout_2->addItem(verticalSpacer_2);
 
+    colorButton = new QPushButton(widget);
+    colorButton->setObjectName(QString::fromUtf8("colorButton"));
+
+    verticalLayout_2->addWidget(colorButton);
+
     selectFileButton = new QPushButton(widget);
     selectFileButton->setObjectName(QString::fromUtf8("selectFileButton"));
 
@@ -243,6 +249,7 @@ public:
     points_view->setText(QApplication::translate("NanoAnalyzerClass", "points", 0, QApplication::UnicodeUTF8));
     lines_view->setText(QApplication::translate("NanoAnalyzerClass", "lines", 0, QApplication::UnicodeUTF8));
     shade_view->setText(QApplication::translate("NanoAnalyzerClass", "shade", 0, QApplication::UnicodeUTF8));
+    colorButton->setText(QApplication::translate("NanoAnalyzerClass", "SetColor", 0, QApplication::UnicodeUTF8));
     selectFileButton->setText(QApplication::translate("NanoAnalyzerClass", "Select File", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi

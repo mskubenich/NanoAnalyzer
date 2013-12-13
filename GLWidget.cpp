@@ -7,10 +7,11 @@
 
 #include "GLWidget.h"
 #include <QMouseEvent>
-#include <QColorDialog>
 #include <qmessagebox.h>
 #include <QDebug>
 #include <qmath.h>
+#include <qrgb.h>
+
 
 
 GLWidget::GLWidget(QWidget *parent) :
@@ -60,7 +61,7 @@ void GLWidget::initializeGL(){
 //	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,globalAmbient);
 
 	//Defining the position of the point light source GL_LIGHT0 at (x,y,z)=(0,0,40)
-	GLfloat light0Position[]={-30,-30,90,1};
+	GLfloat light0Position[]={-90,-90,40,1};
 	glLightfv(GL_LIGHT0,GL_POSITION,light0Position);
 
 	//Defining "diffuse" lighting properties for GL_LIGHT0
@@ -179,12 +180,27 @@ void GLWidget::draw(){
 			glPolygonMode(GL_FRONT,GL_FILL);
 		}
 
-		glColor3f(0, 1, 0);
-
 		glDisable(GL_CULL_FACE);
 
 		float ambient[4] = {0.5, 0.5, 0.5, 1};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
+
+
+		GLfloat specularity = 0.1f;
+		GLfloat emissivity = 0.05f;
+		int shininess = 0;
+		//The color of the sphere
+		GLfloat materialColor[] = { color.redF(), color.greenF(), color.blueF(), color.alphaF() };
+		//The specular (shiny) component of the material
+		GLfloat materialSpecular[] = {specularity, specularity, specularity, 1.0f};
+		//The color emitted by the material
+		GLfloat materialEmission[] = {emissivity, emissivity, emissivity, 1.0f};
+
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, materialSpecular);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, materialEmission);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess); //The shininess parameter
+
 
 		if(isDAT){
 			drawDAT();

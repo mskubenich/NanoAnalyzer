@@ -145,6 +145,9 @@
               <property name="maximum" >
                <number>999</number>
               </property>
+              <property name="value" >
+               <number>84</number>
+              </property>
              </widget>
             </item>
             <item>
@@ -197,6 +200,45 @@
                 <string>shade</string>
                </property>
               </widget>
+              <widget class="QPushButton" name="colorButton" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>70</y>
+                 <width>111</width>
+                 <height>23</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>SetColor</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_2" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+                <horstretch>0</horstretch>
+                <verstretch>5</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title" >
+               <string>Gradient</string>
+              </property>
+              <widget class="QRadioButton" name="gradientButton" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>20</y>
+                 <width>84</width>
+                 <height>18</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>gradient</string>
+               </property>
+              </widget>
              </widget>
             </item>
             <item>
@@ -211,13 +253,6 @@
                </size>
               </property>
              </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="colorButton" >
-              <property name="text" >
-               <string>SetColor</string>
-              </property>
-             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="selectFileButton" >

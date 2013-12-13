@@ -78,6 +78,14 @@ void NanoAnalyzer::on_dx_textChanged(QString str){
 	redraw();
 }
 
+void NanoAnalyzer::on_gradientButton_clicked(){
+	if(ui.gradientButton->isChecked()){
+		ui.modelView->gradient = true;
+	}else{
+		ui.modelView->gradient = false;
+	}
+	redraw();
+}
 
 void NanoAnalyzer::draw_csv(){
 	QStandardItemModel *model = new QStandardItemModel(200,3,this);
@@ -110,11 +118,11 @@ void NanoAnalyzer::draw_csv(){
 			rowPointsCount = ui.rowPointsCount->value();
 		}
 
-		float dx = 0.1;
+		float dx = 5.0;
 		if(ui.dx->text() != "" ){
 			dx = ui.dx->text().toFloat();
 		}
-		float dy = 0.1;
+		float dy = 5.0;
 		if(ui.dy->text() != "" ){
 			dy = ui.dy->text().toFloat();
 		}

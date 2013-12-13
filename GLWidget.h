@@ -27,6 +27,7 @@ public:
 	void drawDAT();
 
 	QColor color;
+	boolean gradient;
 
 private:
 	QString drawtype;

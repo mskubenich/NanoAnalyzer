@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Fri Dec 13 11:19:15 2013
+** Created: Fri Dec 13 12:56:35 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -58,8 +58,10 @@ public:
     QRadioButton *points_view;
     QRadioButton *lines_view;
     QRadioButton *shade_view;
-    QSpacerItem *verticalSpacer_2;
     QPushButton *colorButton;
+    QGroupBox *groupBox_2;
+    QRadioButton *gradientButton;
+    QSpacerItem *verticalSpacer_2;
     QPushButton *selectFileButton;
     QTableView *tableView;
     QMenuBar *menubar;
@@ -169,6 +171,7 @@ public:
     rowPointsCount->setObjectName(QString::fromUtf8("rowPointsCount"));
     rowPointsCount->setMinimum(1);
     rowPointsCount->setMaximum(999);
+    rowPointsCount->setValue(84);
 
     verticalLayout_2->addWidget(rowPointsCount);
 
@@ -188,17 +191,28 @@ public:
     shade_view = new QRadioButton(groupBox);
     shade_view->setObjectName(QString::fromUtf8("shade_view"));
     shade_view->setGeometry(QRect(10, 50, 84, 18));
+    colorButton = new QPushButton(groupBox);
+    colorButton->setObjectName(QString::fromUtf8("colorButton"));
+    colorButton->setGeometry(QRect(10, 70, 111, 23));
 
     verticalLayout_2->addWidget(groupBox);
+
+    groupBox_2 = new QGroupBox(widget);
+    groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+    QSizePolicy sizePolicy5(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    sizePolicy5.setHorizontalStretch(0);
+    sizePolicy5.setVerticalStretch(5);
+    sizePolicy5.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
+    groupBox_2->setSizePolicy(sizePolicy5);
+    gradientButton = new QRadioButton(groupBox_2);
+    gradientButton->setObjectName(QString::fromUtf8("gradientButton"));
+    gradientButton->setGeometry(QRect(10, 20, 84, 18));
+
+    verticalLayout_2->addWidget(groupBox_2);
 
     verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     verticalLayout_2->addItem(verticalSpacer_2);
-
-    colorButton = new QPushButton(widget);
-    colorButton->setObjectName(QString::fromUtf8("colorButton"));
-
-    verticalLayout_2->addWidget(colorButton);
 
     selectFileButton = new QPushButton(widget);
     selectFileButton->setObjectName(QString::fromUtf8("selectFileButton"));
@@ -214,11 +228,11 @@ public:
     splitter->addWidget(widget);
     tableView = new QTableView(splitter);
     tableView->setObjectName(QString::fromUtf8("tableView"));
-    QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    sizePolicy5.setHorizontalStretch(0);
-    sizePolicy5.setVerticalStretch(0);
-    sizePolicy5.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
-    tableView->setSizePolicy(sizePolicy5);
+    QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    sizePolicy6.setHorizontalStretch(0);
+    sizePolicy6.setVerticalStretch(0);
+    sizePolicy6.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+    tableView->setSizePolicy(sizePolicy6);
     splitter->addWidget(tableView);
 
     verticalLayout->addWidget(splitter);
@@ -250,6 +264,8 @@ public:
     lines_view->setText(QApplication::translate("NanoAnalyzerClass", "lines", 0, QApplication::UnicodeUTF8));
     shade_view->setText(QApplication::translate("NanoAnalyzerClass", "shade", 0, QApplication::UnicodeUTF8));
     colorButton->setText(QApplication::translate("NanoAnalyzerClass", "SetColor", 0, QApplication::UnicodeUTF8));
+    groupBox_2->setTitle(QApplication::translate("NanoAnalyzerClass", "Gradient", 0, QApplication::UnicodeUTF8));
+    gradientButton->setText(QApplication::translate("NanoAnalyzerClass", "gradient", 0, QApplication::UnicodeUTF8));
     selectFileButton->setText(QApplication::translate("NanoAnalyzerClass", "Select File", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi

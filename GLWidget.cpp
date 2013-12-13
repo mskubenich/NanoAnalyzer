@@ -34,6 +34,8 @@ GLWidget::GLWidget(QWidget *parent) :
 
 	shouldpaint = false;
 	isDAT = false;
+
+	gradient = false;
 }
 
 void GLWidget::initializeGL(){
@@ -189,14 +191,16 @@ void GLWidget::draw(){
 		GLfloat specularity = 0.1f;
 		GLfloat emissivity = 0.05f;
 		int shininess = 0;
-		//The color of the sphere
-		GLfloat materialColor[] = { color.redF(), color.greenF(), color.blueF(), color.alphaF() };
 		//The specular (shiny) component of the material
 		GLfloat materialSpecular[] = {specularity, specularity, specularity, 1.0f};
 		//The color emitted by the material
 		GLfloat materialEmission[] = {emissivity, emissivity, emissivity, 1.0f};
 
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+		//The color of the sphere
+		if(!gradient){
+			GLfloat materialColor[] = { color.redF(), color.greenF(), color.blueF(), color.alphaF() };
+			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+		}
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, materialSpecular);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, materialEmission);
 		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess); //The shininess parameter
@@ -328,6 +332,12 @@ void GLWidget::drawCSV(){
 			  previous_xy_z = fit_to_size((points[i - 1][j - 1])/bigger);
 		  }
 
+			if(gradient){
+				GLfloat h = abs(z);
+				GLfloat materialColor[] = { h, 0, 1.0 - h, 1 };
+				glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+			}
+
 		  glBegin(GL_TRIANGLES);
 		  glNormal3f( 0 - ((z - previous_x_z)*(y_step)), ((z - previous_x_z)*x_step)-(x_step*(z - previous_xy_z)), (x_step*y_step) );
 		  glVertex3f(x,          y,          z            );
@@ -348,43 +358,89 @@ void GLWidget::drawCSV(){
 
 
 void GLWidget::drawDAT(){
-	float step_y = 2.0/(points.size()/2);
+	if(QString::compare(drawtype, "lines") == 0){
+		glLineWidth(5.0f);
+		float step_y = 2.0/(points.size()/2);
 
-	float current_y = step_y - 1.0;
-	int i = 2;
-	while(i < points.size()){
-		int j = 1;
-		while(j < points[i].size()){
+		float current_y = step_y - 1.0;
+		int i = 2;
+		while(i < points.size()){
+			int j = 1;
+			while(j < points[i].size()){
 
-			float x = fit_to_size(points[i][j]);
-			float y = fit_to_size(current_y);
-			float z = fit_to_size((points[i+1][j] * max_x)/max_y);
+				float x = fit_to_size(points[i][j]);
+				float y = fit_to_size(current_y);
+				float z = fit_to_size((points[i+1][j] * max_x)/max_y);
 
-			float prev_x    = fit_to_size(points[i][j-1]);
-			float prev_x_z  = fit_to_size((points[i+1][j-1]*max_x)/max_y);
-			float prev_y_z  = fit_to_size((points[i-1][j]*max_x)/max_y);
-			float prev_y    = fit_to_size(current_y - step_y);
-			float prev_xy_z = fit_to_size((points[i-1][j-1]*max_x)/max_y);
+				float prev_x    = fit_to_size(points[i][j-1]);
+				float prev_x_z  = fit_to_size((points[i+1][j-1]*max_x)/max_y);
+				float prev_y_z  = fit_to_size((points[i-1][j]*max_x)/max_y);
+				float prev_y    = fit_to_size(current_y - step_y);
+				float prev_xy_z = fit_to_size((points[i-1][j-1]*max_x)/max_y);
 
-			glBegin(GL_TRIANGLES);
-				glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
-				glVertex3f(x,      y,       z        );
-				glVertex3f(prev_x, y,       prev_x_z );
-				glVertex3f(prev_x, prev_y,  prev_xy_z);
-			glEnd();
+				if(gradient){
+					GLfloat h = abs(z);
+					GLfloat materialColor[] = { h, 0, 1.0 - h, 1 };
+					glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+				}
 
-			glBegin(GL_TRIANGLES);
-				glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
-				glVertex3f(x,      y,      z        );
-				glVertex3f(prev_x, prev_y, prev_xy_z);
-				glVertex3f(x,      prev_y, prev_y_z );
-			glEnd();
+				glBegin(GL_LINES);
+					glVertex3f(x,      y,       z        );
+					glVertex3f(prev_x, y,       prev_x_z );
+				glEnd();
 
-			j++;
+				j++;
+			}
+			current_y = current_y + step_y;
+			i = i+2;
 		}
-		current_y = current_y + step_y;
-		i = i+2;
+	}else{
+		float step_y = 2.0/(points.size()/2);
+
+		float current_y = step_y - 1.0;
+		int i = 2;
+		while(i < points.size()){
+			int j = 1;
+			while(j < points[i].size()){
+
+				float x = fit_to_size(points[i][j]);
+				float y = fit_to_size(current_y);
+				float z = fit_to_size((points[i+1][j] * max_x)/max_y);
+
+				float prev_x    = fit_to_size(points[i][j-1]);
+				float prev_x_z  = fit_to_size((points[i+1][j-1]*max_x)/max_y);
+				float prev_y_z  = fit_to_size((points[i-1][j]*max_x)/max_y);
+				float prev_y    = fit_to_size(current_y - step_y);
+				float prev_xy_z = fit_to_size((points[i-1][j-1]*max_x)/max_y);
+
+				if(gradient){
+					GLfloat h = abs(z);
+					GLfloat materialColor[] = { h, 0, 1.0 - h, 1 };
+					glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+				}
+
+				glBegin(GL_TRIANGLES);
+					glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
+					glVertex3f(x,      y,       z        );
+					glVertex3f(prev_x, y,       prev_x_z );
+					glVertex3f(prev_x, prev_y,  prev_xy_z);
+				glEnd();
+
+				glBegin(GL_TRIANGLES);
+					glNormal3f( (0)-((prev_x_z - z)*(prev_y -y)), ((prev_x_z - z)*(prev_x -x))-((prev_x - x)*(prev_xy_z - z)) ,((prev_x - x)*(prev_y -y))-(0) );
+					glVertex3f(x,      y,      z        );
+					glVertex3f(prev_x, prev_y, prev_xy_z);
+					glVertex3f(x,      prev_y, prev_y_z );
+				glEnd();
+
+				j++;
+			}
+			current_y = current_y + step_y;
+			i = i+2;
+		}
 	}
+
+	glLineWidth(1.0f);
 }
 
 

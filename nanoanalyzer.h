@@ -24,6 +24,7 @@ private slots:
     void on_rowPointsCount_valueChanged(int value);
     void on_dy_textChanged(QString str);
     void on_dx_textChanged(QString str);
+    void on_gradientButton_clicked();
 private:
     Ui::NanoAnalyzerClass ui;
 	QString fileName;

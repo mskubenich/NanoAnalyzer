@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Fri Dec 13 12:56:35 2013
+** Created: Fri Dec 13 14:35:09 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -177,11 +177,12 @@ public:
 
     groupBox = new QGroupBox(widget);
     groupBox->setObjectName(QString::fromUtf8("groupBox"));
-    QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
     sizePolicy4.setHorizontalStretch(0);
-    sizePolicy4.setVerticalStretch(11);
+    sizePolicy4.setVerticalStretch(6);
     sizePolicy4.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
     groupBox->setSizePolicy(sizePolicy4);
+    groupBox->setMinimumSize(QSize(0, 101));
     points_view = new QRadioButton(groupBox);
     points_view->setObjectName(QString::fromUtf8("points_view"));
     points_view->setGeometry(QRect(10, 10, 84, 18));

@@ -75,6 +75,8 @@ void GLWidget::initializeGL(){
 	glLightfv(GL_LIGHT0,GL_SPECULAR,light0Specular);
 
 	glEnable(GL_LIGHT0);
+
+	glPointSize(1.8);
 }
 
 void GLWidget::paintGL(){

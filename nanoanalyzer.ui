@@ -153,10 +153,16 @@
             <item>
              <widget class="QGroupBox" name="groupBox" >
               <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
                 <horstretch>0</horstretch>
-                <verstretch>11</verstretch>
+                <verstretch>6</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize" >
+               <size>
+                <width>0</width>
+                <height>101</height>
+               </size>
               </property>
               <property name="title" >
                <string>View</string>

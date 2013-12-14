@@ -29,8 +29,9 @@ public:
 	void _draw_text(double x, double y, double z, QString txt, QColor color);
 
 	QColor color;
-	boolean gradient;
+	bool gradient;
 	GLfloat scale;
+	bool draw_axes;
 
 private:
 	QString drawtype;

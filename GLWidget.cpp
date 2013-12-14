@@ -36,6 +36,7 @@ GLWidget::GLWidget(QWidget *parent) :
 	isDAT = false;
 
 	gradient = false;
+	draw_axes = false;
 }
 
 void GLWidget::initializeGL(){
@@ -135,100 +136,100 @@ void GLWidget::wheelEvent(QWheelEvent* e){
 }
 
 void GLWidget::drawAxes(float bigger, boolean draw_x, boolean draw_y, boolean draw_z){
+	if(draw_axes){
+		GLfloat materialColor[] = { 1.0, 1.0, 1.0, 0.2 };
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+	//	glLineWidth(5.0f);
 
-	GLfloat materialColor[] = { 1.0, 1.0, 1.0, 0.2 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
-//	glLineWidth(5.0f);
+		float step = bigger/10;
+		float glstep = (step)/bigger;
 
-	float step = bigger/10;
-	float glstep = (step)/bigger;
+		if(draw_z){
+			glBegin(GL_LINES);
+				glVertex3f( -1, -1, -1);
+				glVertex3f( -1, -1, 1);
+			glEnd();
 
-	if(draw_z){
+			float current_glvalue = -1.0;
+			float current_value = -bigger;
+			while(current_glvalue < 1.0){
+				glBegin(GL_LINES);
+					glVertex3f( -1, -1, current_glvalue);
+					glVertex3f( -0.99, -0.99, current_glvalue);
+				glEnd();
+				_draw_text( -0.99, -0.99, current_glvalue, QString::number(round(current_value)), Qt::white);
+				current_glvalue += glstep;
+				current_value += step;
+			}
+			_draw_text( -1.0f, -1.0f, 1.0f, "Z(nm)", Qt::red);
+		}
+
+		if(draw_y){
+			glBegin(GL_LINES);
+				glVertex3f( -1, -1, -1);
+				glVertex3f(  1, -1, -1);
+			glEnd();
+
+			float current_glvalue = -1.0;
+			float current_value = -bigger;
+			while(current_glvalue < 1.0){
+				glBegin(GL_LINES);
+					glVertex3f( current_glvalue, -1, -1);
+					glVertex3f( current_glvalue, -0.99, -0.99);
+				glEnd();
+				_draw_text( current_glvalue, -0.99, -0.99, QString::number(round(current_value)), Qt::white);
+				current_glvalue += glstep;
+				current_value += step;
+			}
+			_draw_text( 1.0f, -1.0f, -1.0f, "Y(nm)", Qt::red);
+		}
+
+		if(draw_z){
+			glBegin(GL_LINES);
+				glVertex3f( -1, -1, -1);
+				glVertex3f( -1, 1, -1);
+			glEnd();
+
+			float current_glvalue = -1.0;
+			float current_value = -bigger;
+			while(current_glvalue < 1.0){
+				glBegin(GL_LINES);
+					glVertex3f( -1, current_glvalue, -1);
+					glVertex3f( -0.99, current_glvalue, -0.99);
+				glEnd();
+				_draw_text( -0.99, current_glvalue, -0.99, QString::number(round(current_value)), Qt::white);
+				current_glvalue += glstep;
+				current_value += step;
+			}
+			_draw_text( -1.0f, 1.0f, -1.0f, "X(nm)", Qt::red);
+		}
+
+
+	//draw grid
+		GLfloat materialColor2[] = { 0.4, 0.4, 0.4, 0.2 };
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
+	//	x0-axe
 		glBegin(GL_LINES);
-			glVertex3f( -1, -1, -1);
-			glVertex3f( -1, -1, 1);
+			glVertex3f( -1, -1, 0);
+			glVertex3f(  1, -1, 0);
+		glEnd();
+	//	y0-axe
+		glBegin(GL_LINES);
+			glVertex3f( -1, -1, 0);
+			glVertex3f( -1, 1, 0);
 		glEnd();
 
-		float current_glvalue = -1.0;
-		float current_value = -bigger;
-		while(current_glvalue < 1.0){
-			glBegin(GL_LINES);
-				glVertex3f( -1, -1, current_glvalue);
-				glVertex3f( -0.99, -0.99, current_glvalue);
-			glEnd();
-			_draw_text( -0.99, -0.99, current_glvalue, QString::number(round(current_value)), Qt::white);
-			current_glvalue += glstep;
-			current_value += step;
-		}
-		_draw_text( -1.0f, -1.0f, 1.0f, "Z(nm)", Qt::red);
-	}
-
-	if(draw_y){
 		glBegin(GL_LINES);
-			glVertex3f( -1, -1, -1);
-			glVertex3f(  1, -1, -1);
+			glVertex3f(  1,  1, 0);
+			glVertex3f(  1, -1, 0);
+		glEnd();
+	//	y0-axe
+		glBegin(GL_LINES);
+			glVertex3f( -1, 1, 0);
+			glVertex3f(  1, 1, 0);
 		glEnd();
 
-		float current_glvalue = -1.0;
-		float current_value = -bigger;
-		while(current_glvalue < 1.0){
-			glBegin(GL_LINES);
-				glVertex3f( current_glvalue, -1, -1);
-				glVertex3f( current_glvalue, -0.99, -0.99);
-			glEnd();
-			_draw_text( current_glvalue, -0.99, -0.99, QString::number(round(current_value)), Qt::white);
-			current_glvalue += glstep;
-			current_value += step;
-		}
-		_draw_text( 1.0f, -1.0f, -1.0f, "Y(nm)", Qt::red);
 	}
-
-	if(draw_z){
-		glBegin(GL_LINES);
-			glVertex3f( -1, -1, -1);
-			glVertex3f( -1, 1, -1);
-		glEnd();
-
-		float current_glvalue = -1.0;
-		float current_value = -bigger;
-		while(current_glvalue < 1.0){
-			glBegin(GL_LINES);
-				glVertex3f( -1, current_glvalue, -1);
-				glVertex3f( -0.99, current_glvalue, -0.99);
-			glEnd();
-			_draw_text( -0.99, current_glvalue, -0.99, QString::number(round(current_value)), Qt::white);
-			current_glvalue += glstep;
-			current_value += step;
-		}
-		_draw_text( -1.0f, 1.0f, -1.0f, "X(nm)", Qt::red);
-	}
-
-
-//draw grid
-	GLfloat materialColor2[] = { 0.4, 0.4, 0.4, 0.2 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
-//	x0-axe
-	glBegin(GL_LINES);
-		glVertex3f( -1, -1, 0);
-		glVertex3f(  1, -1, 0);
-	glEnd();
-//	y0-axe
-	glBegin(GL_LINES);
-		glVertex3f( -1, -1, 0);
-		glVertex3f( -1, 1, 0);
-	glEnd();
-
-	glBegin(GL_LINES);
-		glVertex3f(  1,  1, 0);
-		glVertex3f(  1, -1, 0);
-	glEnd();
-//	y0-axe
-	glBegin(GL_LINES);
-		glVertex3f( -1, 1, 0);
-		glVertex3f(  1, 1, 0);
-	glEnd();
-
-
 }
 
 void GLWidget::draw(){

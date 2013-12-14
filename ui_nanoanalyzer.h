@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sat Dec 14 17:42:15 2013
+** Created: Sat Dec 14 18:24:20 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
 #include <QtGui/QDoubleSpinBox>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
@@ -61,9 +62,10 @@ public:
     QRadioButton *shade_view;
     QPushButton *colorButton;
     QGroupBox *groupBox_2;
-    QRadioButton *gradientButton;
     QLabel *label_6;
     QDoubleSpinBox *slideSpinBox;
+    QCheckBox *gradientCheckBox;
+    QCheckBox *draw_axes_checkbox;
     QSpacerItem *verticalSpacer_2;
     QPushButton *selectFileButton;
     QTableView *tableView;
@@ -209,9 +211,6 @@ public:
     sizePolicy5.setVerticalStretch(5);
     sizePolicy5.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
     groupBox_2->setSizePolicy(sizePolicy5);
-    gradientButton = new QRadioButton(groupBox_2);
-    gradientButton->setObjectName(QString::fromUtf8("gradientButton"));
-    gradientButton->setGeometry(QRect(10, 20, 84, 18));
     label_6 = new QLabel(groupBox_2);
     label_6->setObjectName(QString::fromUtf8("label_6"));
     label_6->setGeometry(QRect(10, 40, 46, 14));
@@ -222,6 +221,12 @@ public:
     slideSpinBox->setMinimum(-100);
     slideSpinBox->setMaximum(100);
     slideSpinBox->setSingleStep(1);
+    gradientCheckBox = new QCheckBox(groupBox_2);
+    gradientCheckBox->setObjectName(QString::fromUtf8("gradientCheckBox"));
+    gradientCheckBox->setGeometry(QRect(10, 20, 72, 18));
+    draw_axes_checkbox = new QCheckBox(groupBox_2);
+    draw_axes_checkbox->setObjectName(QString::fromUtf8("draw_axes_checkbox"));
+    draw_axes_checkbox->setGeometry(QRect(10, 90, 72, 18));
 
     verticalLayout_2->addWidget(groupBox_2);
 
@@ -280,8 +285,9 @@ public:
     shade_view->setText(QApplication::translate("NanoAnalyzerClass", "shade", 0, QApplication::UnicodeUTF8));
     colorButton->setText(QApplication::translate("NanoAnalyzerClass", "SetColor", 0, QApplication::UnicodeUTF8));
     groupBox_2->setTitle(QApplication::translate("NanoAnalyzerClass", "Other", 0, QApplication::UnicodeUTF8));
-    gradientButton->setText(QApplication::translate("NanoAnalyzerClass", "gradient", 0, QApplication::UnicodeUTF8));
     label_6->setText(QApplication::translate("NanoAnalyzerClass", "Slide", 0, QApplication::UnicodeUTF8));
+    gradientCheckBox->setText(QApplication::translate("NanoAnalyzerClass", "gradient", 0, QApplication::UnicodeUTF8));
+    draw_axes_checkbox->setText(QApplication::translate("NanoAnalyzerClass", "draw axes", 0, QApplication::UnicodeUTF8));
     selectFileButton->setText(QApplication::translate("NanoAnalyzerClass", "Select File", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi

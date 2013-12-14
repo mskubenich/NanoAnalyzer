@@ -235,19 +235,6 @@
               <property name="title" >
                <string>Other</string>
               </property>
-              <widget class="QRadioButton" name="gradientButton" >
-               <property name="geometry" >
-                <rect>
-                 <x>10</x>
-                 <y>20</y>
-                 <width>84</width>
-                 <height>18</height>
-                </rect>
-               </property>
-               <property name="text" >
-                <string>gradient</string>
-               </property>
-              </widget>
               <widget class="QLabel" name="label_6" >
                <property name="geometry" >
                 <rect>
@@ -281,6 +268,32 @@
                </property>
                <property name="singleStep" >
                 <double>1.000000000000000</double>
+               </property>
+              </widget>
+              <widget class="QCheckBox" name="gradientCheckBox" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>20</y>
+                 <width>72</width>
+                 <height>18</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>gradient</string>
+               </property>
+              </widget>
+              <widget class="QCheckBox" name="draw_axes_checkbox" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>90</y>
+                 <width>72</width>
+                 <height>18</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>draw axes</string>
                </property>
               </widget>
              </widget>

@@ -25,7 +25,8 @@ private slots:
     void on_slideSpinBox_valueChanged(double value);
     void on_dy_textChanged(QString str);
     void on_dx_textChanged(QString str);
-    void on_gradientButton_clicked();
+    void on_gradientCheckBox_clicked(bool value);
+    void on_draw_axes_checkbox_clicked(bool value);
 private:
     Ui::NanoAnalyzerClass ui;
 	QString fileName;

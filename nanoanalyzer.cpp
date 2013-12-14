@@ -80,11 +80,20 @@ void NanoAnalyzer::on_dx_textChanged(QString str){
 	redraw();
 }
 
-void NanoAnalyzer::on_gradientButton_clicked(){
-	if(ui.gradientButton->isChecked()){
+void NanoAnalyzer::on_gradientCheckBox_clicked(bool value){
+	if(ui.gradientCheckBox->isChecked()){
 		ui.modelView->gradient = true;
 	}else{
 		ui.modelView->gradient = false;
+	}
+	redraw();
+}
+
+void NanoAnalyzer::on_draw_axes_checkbox_clicked(bool value){
+	if(ui.draw_axes_checkbox->isChecked()){
+		ui.modelView->draw_axes = true;
+	}else{
+		ui.modelView->draw_axes = false;
 	}
 	redraw();
 }

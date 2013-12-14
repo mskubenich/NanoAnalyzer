@@ -120,7 +120,6 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 void GLWidget::wheelEvent(QWheelEvent* e){
-//	QMessageBox::information(this, "title", QString::number(e->delta()));
 	scale = scale + e->delta()/1500.0;
 	if(scale > 4){
 		scale = 4.0;
@@ -135,32 +134,77 @@ void GLWidget::wheelEvent(QWheelEvent* e){
 	updateGL();
 }
 
-void GLWidget::drawAxes(){
+void GLWidget::drawAxes(float bigger, boolean draw_x, boolean draw_y, boolean draw_z){
 
 	GLfloat materialColor[] = { 1.0, 1.0, 1.0, 0.2 };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
 //	glLineWidth(5.0f);
 
-//	z-axe
-	glBegin(GL_LINES);
-		glVertex3f( -1, -1, -1);
-		glVertex3f( -1, -1, 1);
-	glEnd();
-	_draw_text( -1.0f, -1.0f, 1.0f, "z");
-//	x-axe
-	glBegin(GL_LINES);
-		glVertex3f( -1, -1, -1);
-		glVertex3f(  1, -1, -1);
-	glEnd();
-	_draw_text(  1.0f, -1.0f, -1.0f, "y");
-//	y-axe
-	glBegin(GL_LINES);
-		glVertex3f( -1, -1, -1);
-		glVertex3f( -1, 1, -1);
-	glEnd();
-	_draw_text( -1.0f, 1.0f, -1.0f, "x");
+	float step = bigger/10;
+	float glstep = (step)/bigger;
+
+	if(draw_z){
+		glBegin(GL_LINES);
+			glVertex3f( -1, -1, -1);
+			glVertex3f( -1, -1, 1);
+		glEnd();
+
+		float current_glvalue = -1.0;
+		float current_value = -bigger;
+		while(current_glvalue < 1.0){
+			glBegin(GL_LINES);
+				glVertex3f( -1, -1, current_glvalue);
+				glVertex3f( -0.99, -0.99, current_glvalue);
+			glEnd();
+			_draw_text( -0.99, -0.99, current_glvalue, QString::number(round(current_value)), Qt::white);
+			current_glvalue += glstep;
+			current_value += step;
+		}
+		_draw_text( -1.0f, -1.0f, 1.0f, "Z(nm)", Qt::red);
+	}
+
+	if(draw_y){
+		glBegin(GL_LINES);
+			glVertex3f( -1, -1, -1);
+			glVertex3f(  1, -1, -1);
+		glEnd();
+
+		float current_glvalue = -1.0;
+		float current_value = -bigger;
+		while(current_glvalue < 1.0){
+			glBegin(GL_LINES);
+				glVertex3f( current_glvalue, -1, -1);
+				glVertex3f( current_glvalue, -0.99, -0.99);
+			glEnd();
+			_draw_text( current_glvalue, -0.99, -0.99, QString::number(round(current_value)), Qt::white);
+			current_glvalue += glstep;
+			current_value += step;
+		}
+		_draw_text( 1.0f, -1.0f, -1.0f, "Y(nm)", Qt::red);
+	}
+
+	if(draw_z){
+		glBegin(GL_LINES);
+			glVertex3f( -1, -1, -1);
+			glVertex3f( -1, 1, -1);
+		glEnd();
+
+		float current_glvalue = -1.0;
+		float current_value = -bigger;
+		while(current_glvalue < 1.0){
+			glBegin(GL_LINES);
+				glVertex3f( -1, current_glvalue, -1);
+				glVertex3f( -0.99, current_glvalue, -0.99);
+			glEnd();
+			_draw_text( -0.99, current_glvalue, -0.99, QString::number(round(current_value)), Qt::white);
+			current_glvalue += glstep;
+			current_value += step;
+		}
+		_draw_text( -1.0f, 1.0f, -1.0f, "X(nm)", Qt::red);
+	}
 
 
+//draw grid
 	GLfloat materialColor2[] = { 0.4, 0.4, 0.4, 0.2 };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
 //	x0-axe
@@ -239,7 +283,6 @@ void GLWidget::draw(){
 		}else{
 			drawCSV();
 		}
-		drawAxes();
 		glPopMatrix();
 	}
 }
@@ -382,6 +425,8 @@ void GLWidget::drawCSV(){
 
 	  }
 	}
+
+	drawAxes(bigger, true, true, true);
 }
 
 
@@ -504,12 +549,12 @@ float GLWidget::fit_to_size(float number){
 	}
 }
 
-void GLWidget::_draw_text(double x, double y, double z, QString txt)
+void GLWidget::_draw_text(double x, double y, double z, QString txt, QColor color)
 {
     glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
-    qglColor(Qt::white);
-    renderText(x, y, z, txt, QFont("Arial", 12, QFont::Bold, false) );
+    qglColor(color);
+    renderText(x, y, z, txt, QFont("Arial", 10, QFont::Bold, false) );
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
 }

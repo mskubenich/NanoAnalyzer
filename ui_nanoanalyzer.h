@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sat Dec 14 17:09:05 2013
+** Created: Sat Dec 14 17:42:15 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!

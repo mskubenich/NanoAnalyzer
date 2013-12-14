@@ -26,7 +26,7 @@ public:
 
 	void drawCSV();
 	void drawDAT();
-	void _draw_text(double x, double y, double z, QString txt);
+	void _draw_text(double x, double y, double z, QString txt, QColor color);
 
 	QColor color;
 	boolean gradient;
@@ -35,8 +35,7 @@ public:
 private:
 	QString drawtype;
 	void draw();
-	void drawAxes();
-	QColor faceColors[6];
+	void drawAxes(float bigger, boolean draw_x, boolean draw_y, boolean draw_z);
 	QVector<QVector <float> > points;
 	float max_x;
 	float min_x;

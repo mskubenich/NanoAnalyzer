@@ -77,6 +77,7 @@ void GLWidget::initializeGL(){
 	glEnable(GL_LIGHT0);
 
 	glPointSize(1.8);
+	scale = 1.0;
 }
 
 void GLWidget::paintGL(){
@@ -118,6 +119,22 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     updateGL();
 }
 
+void GLWidget::wheelEvent(QWheelEvent* e){
+//	QMessageBox::information(this, "title", QString::number(e->delta()));
+	scale = scale + e->delta()/1500.0;
+	if(scale > 4){
+		scale = 4.0;
+		e->ignore();
+	}else if(scale < 0.4){
+		scale = 0.4;
+		e->ignore();
+	}else{
+		e->accept();
+	}
+	paintGL();
+	updateGL();
+}
+
 void GLWidget::drawAxes(){
 
 	GLfloat materialColor[] = { 1.0, 1.0, 1.0, 0.2 };
@@ -144,6 +161,8 @@ void GLWidget::drawAxes(){
 	_draw_text( -1.0f, 1.0f, -1.0f, "x");
 
 
+	GLfloat materialColor2[] = { 0.4, 0.4, 0.4, 0.2 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
 //	x0-axe
 	glBegin(GL_LINES);
 		glVertex3f( -1, -1, 0);
@@ -176,6 +195,7 @@ void GLWidget::draw(){
 
 		glPushMatrix();
 		glMultMatrixf(Transform.M);
+		glScalef( scale, scale, scale);
 
 		if(QString::compare(drawtype, "points") == 0){
 			glPolygonMode(GL_BACK,GL_POINT);

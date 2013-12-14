@@ -20,6 +20,7 @@ public:
 	void resizeGL(int w, int h);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
+	void wheelEvent(QWheelEvent* event);
 	void setModelVector(QVector< QVector<float> > data_vector, float max_x, float min_x, float max_y, float min_y, float max_z, float min_z, float dx, float dy, QString drawtype);
 	void setDATModelVector(QVector< QVector<float> > data_vector, float max, float maxy, QString drawtype);
 
@@ -29,6 +30,7 @@ public:
 
 	QColor color;
 	boolean gradient;
+	GLfloat scale;
 
 private:
 	QString drawtype;

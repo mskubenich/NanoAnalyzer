@@ -22,6 +22,7 @@ private slots:
     void on_lines_view_clicked();
     void on_points_view_clicked();
     void on_rowPointsCount_valueChanged(int value);
+    void on_slideSpinBox_valueChanged(double value);
     void on_dy_textChanged(QString str);
     void on_dx_textChanged(QString str);
     void on_gradientButton_clicked();

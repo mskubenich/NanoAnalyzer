@@ -68,11 +68,13 @@ void NanoAnalyzer::on_rowPointsCount_valueChanged(int value){
 	redraw();
 }
 
-
 void NanoAnalyzer::on_dy_textChanged(QString str){
 	redraw();
 }
 
+void NanoAnalyzer::on_slideSpinBox_valueChanged(double value){
+	redraw();
+}
 
 void NanoAnalyzer::on_dx_textChanged(QString str){
 	redraw();
@@ -139,7 +141,7 @@ void NanoAnalyzer::draw_csv(){
 					if(in.atEnd()){
 						row.push_back(0.0);
 					}else{
-						float point = in.readLine().toFloat();
+						float point = in.readLine().toFloat() + (ui.slideSpinBox->value()*10);
 						row.push_back(point);
 
 						QStandardItem *z_cell = new QStandardItem(QString::number(point));
@@ -252,7 +254,7 @@ void NanoAnalyzer::draw_dat(){
 					QStringList columns = row.split(", ");
 					int c = 0;
 					while(c < columns.size()){
-						float float_value = QString(columns.at(c)).replace(",", ".").toFloat();
+						float float_value = QString(columns.at(c)).replace(",", ".").toFloat() - (ui.slideSpinBox->value()*10);
 						QStandardItem *cell = new QStandardItem(QString::number(float_value));
 						model->setItem(j - 1, c, cell);
 						data_vector[c].push_back(float_value);

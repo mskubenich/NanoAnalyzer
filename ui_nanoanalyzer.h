@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sat Dec 14 16:07:26 2013
+** Created: Sat Dec 14 17:09:05 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDoubleSpinBox>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
@@ -61,6 +62,8 @@ public:
     QPushButton *colorButton;
     QGroupBox *groupBox_2;
     QRadioButton *gradientButton;
+    QLabel *label_6;
+    QDoubleSpinBox *slideSpinBox;
     QSpacerItem *verticalSpacer_2;
     QPushButton *selectFileButton;
     QTableView *tableView;
@@ -171,6 +174,7 @@ public:
     rowPointsCount->setObjectName(QString::fromUtf8("rowPointsCount"));
     rowPointsCount->setMinimum(1);
     rowPointsCount->setMaximum(999);
+    rowPointsCount->setSingleStep(1);
     rowPointsCount->setValue(84);
 
     verticalLayout_2->addWidget(rowPointsCount);
@@ -194,7 +198,7 @@ public:
     shade_view->setGeometry(QRect(10, 50, 84, 18));
     colorButton = new QPushButton(groupBox);
     colorButton->setObjectName(QString::fromUtf8("colorButton"));
-    colorButton->setGeometry(QRect(10, 70, 111, 23));
+    colorButton->setGeometry(QRect(0, 70, 131, 23));
 
     verticalLayout_2->addWidget(groupBox);
 
@@ -208,6 +212,16 @@ public:
     gradientButton = new QRadioButton(groupBox_2);
     gradientButton->setObjectName(QString::fromUtf8("gradientButton"));
     gradientButton->setGeometry(QRect(10, 20, 84, 18));
+    label_6 = new QLabel(groupBox_2);
+    label_6->setObjectName(QString::fromUtf8("label_6"));
+    label_6->setGeometry(QRect(10, 40, 46, 14));
+    slideSpinBox = new QDoubleSpinBox(groupBox_2);
+    slideSpinBox->setObjectName(QString::fromUtf8("slideSpinBox"));
+    slideSpinBox->setGeometry(QRect(0, 60, 131, 22));
+    slideSpinBox->setDecimals(2);
+    slideSpinBox->setMinimum(-100);
+    slideSpinBox->setMaximum(100);
+    slideSpinBox->setSingleStep(1);
 
     verticalLayout_2->addWidget(groupBox_2);
 
@@ -265,8 +279,9 @@ public:
     lines_view->setText(QApplication::translate("NanoAnalyzerClass", "lines", 0, QApplication::UnicodeUTF8));
     shade_view->setText(QApplication::translate("NanoAnalyzerClass", "shade", 0, QApplication::UnicodeUTF8));
     colorButton->setText(QApplication::translate("NanoAnalyzerClass", "SetColor", 0, QApplication::UnicodeUTF8));
-    groupBox_2->setTitle(QApplication::translate("NanoAnalyzerClass", "Gradient", 0, QApplication::UnicodeUTF8));
+    groupBox_2->setTitle(QApplication::translate("NanoAnalyzerClass", "Other", 0, QApplication::UnicodeUTF8));
     gradientButton->setText(QApplication::translate("NanoAnalyzerClass", "gradient", 0, QApplication::UnicodeUTF8));
+    label_6->setText(QApplication::translate("NanoAnalyzerClass", "Slide", 0, QApplication::UnicodeUTF8));
     selectFileButton->setText(QApplication::translate("NanoAnalyzerClass", "Select File", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(NanoAnalyzerClass);
     } // retranslateUi

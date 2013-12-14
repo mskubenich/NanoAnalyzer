@@ -25,6 +25,7 @@ public:
 
 	void drawCSV();
 	void drawDAT();
+	void _draw_text(double x, double y, double z, QString txt);
 
 	QColor color;
 	boolean gradient;

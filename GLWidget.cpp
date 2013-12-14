@@ -120,43 +120,49 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GLWidget::drawAxes(){
 
-	glPolygonMode(GL_BACK,GL_LINE);
-	glPolygonMode(GL_FRONT,GL_LINE);
-	glColor3f(0, 0, 1);
-//	bottom
-	glBegin(GL_POLYGON);
-		glVertex3f(-1, -1, -1);
-		glVertex3f( 1, -1, -1);
-		glVertex3f( 1,  1, -1);
-		glVertex3f(-1,  1, -1);
+	GLfloat materialColor[] = { 1.0, 1.0, 1.0, 0.2 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
+//	glLineWidth(5.0f);
+
+//	z-axe
+	glBegin(GL_LINES);
+		glVertex3f( -1, -1, -1);
+		glVertex3f( -1, -1, 1);
 	glEnd();
-//	front
-	glBegin(GL_POLYGON);
-		glVertex3f(-1,  1, -1);
-		glVertex3f(-1,  1,  1);
-		glVertex3f( 1,  1,  1);
-		glVertex3f( 1,  1, -1);
+	_draw_text( -1.0f, -1.0f, 1.0f, "z");
+//	x-axe
+	glBegin(GL_LINES);
+		glVertex3f( -1, -1, -1);
+		glVertex3f(  1, -1, -1);
 	glEnd();
-//	top
-	glBegin(GL_POLYGON);
-		glVertex3f(-1, -1,  1);
-		glVertex3f( 1, -1,  1);
-		glVertex3f( 1,  1,  1);
-		glVertex3f(-1,  1,  1);
+	_draw_text(  1.0f, -1.0f, -1.0f, "y");
+//	y-axe
+	glBegin(GL_LINES);
+		glVertex3f( -1, -1, -1);
+		glVertex3f( -1, 1, -1);
 	glEnd();
-	//	back
-	glBegin(GL_POLYGON);
-		glVertex3f(-1, -1, -1);
-		glVertex3f( 1, -1, -1);
-		glVertex3f( 1, -1,  1);
-		glVertex3f(-1, -1,  1);
+	_draw_text( -1.0f, 1.0f, -1.0f, "x");
+
+
+//	x0-axe
+	glBegin(GL_LINES);
+		glVertex3f( -1, -1, 0);
+		glVertex3f(  1, -1, 0);
 	glEnd();
-	//	xy
-	glBegin(GL_POLYGON);
-		glVertex3f(-1, -1, 0);
-		glVertex3f( 1, -1, 0);
-		glVertex3f( 1,  1, 0);
-		glVertex3f(-1,  1, 0);
+//	y0-axe
+	glBegin(GL_LINES);
+		glVertex3f( -1, -1, 0);
+		glVertex3f( -1, 1, 0);
+	glEnd();
+
+	glBegin(GL_LINES);
+		glVertex3f(  1,  1, 0);
+		glVertex3f(  1, -1, 0);
+	glEnd();
+//	y0-axe
+	glBegin(GL_LINES);
+		glVertex3f( -1, 1, 0);
+		glVertex3f(  1, 1, 0);
 	glEnd();
 
 
@@ -476,5 +482,15 @@ float GLWidget::fit_to_size(float number){
 	}else{
 		return number;
 	}
+}
+
+void GLWidget::_draw_text(double x, double y, double z, QString txt)
+{
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
+    qglColor(Qt::white);
+    renderText(x, y, z, txt, QFont("Arial", 12, QFont::Bold, false) );
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 }
 

@@ -141,7 +141,7 @@ void GLWidget::drawAxes(float bigger, boolean draw_x, boolean draw_y, boolean dr
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
 	//	glLineWidth(5.0f);
 
-		float step = bigger/10;
+		float step = bigger/2;
 		float glstep = (step)/bigger;
 
 		if(draw_z){
@@ -184,7 +184,7 @@ void GLWidget::drawAxes(float bigger, boolean draw_x, boolean draw_y, boolean dr
 			_draw_text( 1.0f, -1.0f, -1.0f, "Y(nm)", Qt::red);
 		}
 
-		if(draw_z){
+		if(draw_x){
 			glBegin(GL_LINES);
 				glVertex3f( -1, -1, -1);
 				glVertex3f( -1, 1, -1);
@@ -432,6 +432,34 @@ void GLWidget::drawCSV(){
 
 
 void GLWidget::drawDAT(){
+
+	float bigger = 0;
+	float max_x_mod = abs(max_x);
+	float min_x_mod = abs(min_x);
+	float max_y_mod = abs(max_y);
+	float min_y_mod = abs(min_y);
+	float max_z_mod = abs(max_z);
+	float min_z_mod = abs(min_z);
+
+	if(max_x_mod > bigger){
+		bigger = max_x_mod;
+	}
+	if(min_x_mod > bigger){
+		bigger = min_x_mod;
+	}
+	if(max_y_mod > bigger){
+		bigger = max_y_mod;
+	}
+	if(min_y_mod > bigger){
+		bigger = min_y_mod;
+	}
+	if(max_z_mod > bigger){
+		bigger = max_z_mod;
+	}
+	if(min_z_mod > bigger){
+		bigger = min_z_mod;
+	}
+
 	if(QString::compare(drawtype, "lines") == 0){
 		glLineWidth(5.0f);
 		float step_y = 2.0/(points.size()/2);
@@ -515,6 +543,7 @@ void GLWidget::drawDAT(){
 	}
 
 	glLineWidth(1.0f);
+	drawAxes(bigger, false, true, true);
 }
 
 

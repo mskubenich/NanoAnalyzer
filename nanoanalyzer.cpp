@@ -23,10 +23,10 @@ NanoAnalyzer::~NanoAnalyzer()
 
 void NanoAnalyzer::redraw()
 {
-	QString extension = fileName.split(".").last();
-	if(QString::compare(extension, "csv") == 0){
+	QString extension = fileName.split(".").last().toLower();
+	if(QString::compare(extension, "csv") == 0 || QString::compare(extension, "txt") == 0){
 		draw_csv();
-	}else if(QString::compare(extension, "DAT") == 0){
+	}else if(QString::compare(extension, "dat") == 0){
 		draw_dat();
 	}
 }

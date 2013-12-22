@@ -27,6 +27,8 @@ private slots:
     void on_dx_textChanged(QString str);
     void on_gradientCheckBox_clicked(bool value);
     void on_draw_axes_checkbox_clicked(bool value);
+    void on_rows_count_valueChanged(int value);
+    void on_columns_count_valueChanged(int value);
 private:
     Ui::NanoAnalyzerClass ui;
 	QString fileName;

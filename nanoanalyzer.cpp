@@ -76,6 +76,13 @@ void NanoAnalyzer::on_slideSpinBox_valueChanged(double value){
 	redraw();
 }
 
+void NanoAnalyzer::on_rows_count_valueChanged(int value){
+	redraw();
+}
+void NanoAnalyzer::on_columns_count_valueChanged(int value){
+	redraw();
+}
+
 void NanoAnalyzer::on_dx_textChanged(QString str){
 	redraw();
 }
@@ -132,10 +139,14 @@ void NanoAnalyzer::draw_csv(){
 		float dx = 5.0;
 		if(ui.dx->text() != "" ){
 			dx = ui.dx->text().toFloat();
+		}else{
+			ui.dx->setText("5");
 		}
 		float dy = 5.0;
 		if(ui.dy->text() != "" ){
 			dy = ui.dy->text().toFloat();
+		}else{
+			ui.dx->setText("5");
 		}
 		float positive_v = 0;
 		float negative_v = 0;
@@ -225,7 +236,25 @@ void NanoAnalyzer::draw_csv(){
 			drawtype = "shade";
 		}
 
-		ui.modelView->setModelVector(data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx, dy, drawtype);
+		int increment_x = data_vector[0].size()/ui.columns_count->value();
+		int increment_y = data_vector.size()/ui.rows_count->value();
+		if(increment_x < 1){
+			increment_x = 1;
+		}
+		if(increment_y < 1){
+			increment_y = 1;
+		}
+
+		QVector< QVector<float> > gl_data_vector = QVector< QVector<float> >();
+		for(int r = 0; r < data_vector.size(); r+=increment_y){
+			QVector<float> row;
+			for(int c = 0; c < data_vector[r].size(); c+=increment_x){
+				row.push_back(data_vector[r][c]);
+			}
+			gl_data_vector.push_back(row);
+		}
+
+		ui.modelView->setModelVector(gl_data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx*increment_x, dy*increment_y, drawtype);
 
 		ui.tableView->setModel(model);
 	}

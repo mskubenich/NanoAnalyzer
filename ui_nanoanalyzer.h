@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sun Dec 22 14:11:49 2013
+** Created: Sun Dec 22 15:34:50 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -61,6 +61,11 @@ public:
     QRadioButton *lines_view;
     QRadioButton *shade_view;
     QPushButton *colorButton;
+    QGroupBox *groupBox_3;
+    QLabel *label_7;
+    QLabel *label_8;
+    QSpinBox *columns_count;
+    QSpinBox *rows_count;
     QGroupBox *groupBox_2;
     QLabel *label_6;
     QDoubleSpinBox *slideSpinBox;
@@ -77,7 +82,7 @@ public:
     if (NanoAnalyzerClass->objectName().isEmpty())
         NanoAnalyzerClass->setObjectName(QString::fromUtf8("NanoAnalyzerClass"));
     NanoAnalyzerClass->setWindowModality(Qt::ApplicationModal);
-    NanoAnalyzerClass->resize(1298, 836);
+    NanoAnalyzerClass->resize(776, 939);
     centralwidget = new QWidget(NanoAnalyzerClass);
     centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
     verticalLayout = new QVBoxLayout(centralwidget);
@@ -204,6 +209,32 @@ public:
 
     verticalLayout_2->addWidget(groupBox);
 
+    groupBox_3 = new QGroupBox(widget);
+    groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+    groupBox_3->setMinimumSize(QSize(0, 123));
+    label_7 = new QLabel(groupBox_3);
+    label_7->setObjectName(QString::fromUtf8("label_7"));
+    label_7->setGeometry(QRect(10, 20, 111, 16));
+    label_8 = new QLabel(groupBox_3);
+    label_8->setObjectName(QString::fromUtf8("label_8"));
+    label_8->setGeometry(QRect(10, 70, 91, 16));
+    columns_count = new QSpinBox(groupBox_3);
+    columns_count->setObjectName(QString::fromUtf8("columns_count"));
+    columns_count->setGeometry(QRect(0, 90, 131, 22));
+    columns_count->setMinimum(20);
+    columns_count->setMaximum(400);
+    columns_count->setSingleStep(10);
+    columns_count->setValue(50);
+    rows_count = new QSpinBox(groupBox_3);
+    rows_count->setObjectName(QString::fromUtf8("rows_count"));
+    rows_count->setGeometry(QRect(0, 40, 131, 22));
+    rows_count->setMinimum(20);
+    rows_count->setMaximum(400);
+    rows_count->setSingleStep(10);
+    rows_count->setValue(50);
+
+    verticalLayout_2->addWidget(groupBox_3);
+
     groupBox_2 = new QGroupBox(widget);
     groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
     QSizePolicy sizePolicy5(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -260,7 +291,7 @@ public:
     NanoAnalyzerClass->setCentralWidget(centralwidget);
     menubar = new QMenuBar(NanoAnalyzerClass);
     menubar->setObjectName(QString::fromUtf8("menubar"));
-    menubar->setGeometry(QRect(0, 0, 1298, 22));
+    menubar->setGeometry(QRect(0, 0, 776, 22));
     NanoAnalyzerClass->setMenuBar(menubar);
     statusbar = new QStatusBar(NanoAnalyzerClass);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -277,13 +308,18 @@ public:
     label_5->setText(QApplication::translate("NanoAnalyzerClass", "V(nm^2)", 0, QApplication::UnicodeUTF8));
     label_4->setText(QApplication::translate("NanoAnalyzerClass", "-V(nm*2):", 0, QApplication::UnicodeUTF8));
     label_3->setText(QApplication::translate("NanoAnalyzerClass", "dX(nm)(for .csv only):", 0, QApplication::UnicodeUTF8));
+    dy->setText(QApplication::translate("NanoAnalyzerClass", "5", 0, QApplication::UnicodeUTF8));
     label_2->setText(QApplication::translate("NanoAnalyzerClass", "dY(nm):", 0, QApplication::UnicodeUTF8));
+    dx->setText(QApplication::translate("NanoAnalyzerClass", "5", 0, QApplication::UnicodeUTF8));
     label->setText(QApplication::translate("NanoAnalyzerClass", "Step(for .csv only):", 0, QApplication::UnicodeUTF8));
     groupBox->setTitle(QApplication::translate("NanoAnalyzerClass", "View", 0, QApplication::UnicodeUTF8));
     points_view->setText(QApplication::translate("NanoAnalyzerClass", "points", 0, QApplication::UnicodeUTF8));
     lines_view->setText(QApplication::translate("NanoAnalyzerClass", "lines", 0, QApplication::UnicodeUTF8));
     shade_view->setText(QApplication::translate("NanoAnalyzerClass", "shade", 0, QApplication::UnicodeUTF8));
     colorButton->setText(QApplication::translate("NanoAnalyzerClass", "SetColor", 0, QApplication::UnicodeUTF8));
+    groupBox_3->setTitle(QApplication::translate("NanoAnalyzerClass", "Quality", 0, QApplication::UnicodeUTF8));
+    label_7->setText(QApplication::translate("NanoAnalyzerClass", "RowsCount", 0, QApplication::UnicodeUTF8));
+    label_8->setText(QApplication::translate("NanoAnalyzerClass", "Columns Count", 0, QApplication::UnicodeUTF8));
     groupBox_2->setTitle(QApplication::translate("NanoAnalyzerClass", "Other", 0, QApplication::UnicodeUTF8));
     label_6->setText(QApplication::translate("NanoAnalyzerClass", "Slide", 0, QApplication::UnicodeUTF8));
     gradientCheckBox->setText(QApplication::translate("NanoAnalyzerClass", "gradient", 0, QApplication::UnicodeUTF8));

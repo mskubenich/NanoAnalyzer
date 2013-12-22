@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1298</width>
-    <height>836</height>
+    <width>776</width>
+    <height>939</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -111,6 +111,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="text" >
+               <string>5</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -127,6 +130,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>5</string>
               </property>
              </widget>
             </item>
@@ -220,6 +226,89 @@
                </property>
                <property name="text" >
                 <string>SetColor</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_3" >
+              <property name="minimumSize" >
+               <size>
+                <width>0</width>
+                <height>123</height>
+               </size>
+              </property>
+              <property name="title" >
+               <string>Quality</string>
+              </property>
+              <widget class="QLabel" name="label_7" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>20</y>
+                 <width>111</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>RowsCount</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_8" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>70</y>
+                 <width>91</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>Columns Count</string>
+               </property>
+              </widget>
+              <widget class="QSpinBox" name="columns_count" >
+               <property name="geometry" >
+                <rect>
+                 <x>0</x>
+                 <y>90</y>
+                 <width>131</width>
+                 <height>22</height>
+                </rect>
+               </property>
+               <property name="minimum" >
+                <number>20</number>
+               </property>
+               <property name="maximum" >
+                <number>400</number>
+               </property>
+               <property name="singleStep" >
+                <number>10</number>
+               </property>
+               <property name="value" >
+                <number>50</number>
+               </property>
+              </widget>
+              <widget class="QSpinBox" name="rows_count" >
+               <property name="geometry" >
+                <rect>
+                 <x>0</x>
+                 <y>40</y>
+                 <width>131</width>
+                 <height>22</height>
+                </rect>
+               </property>
+               <property name="minimum" >
+                <number>20</number>
+               </property>
+               <property name="maximum" >
+                <number>400</number>
+               </property>
+               <property name="singleStep" >
+                <number>10</number>
+               </property>
+               <property name="value" >
+                <number>50</number>
                </property>
               </widget>
              </widget>
@@ -341,7 +430,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1298</width>
+     <width>776</width>
      <height>22</height>
     </rect>
    </property>

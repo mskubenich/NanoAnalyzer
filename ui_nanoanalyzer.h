@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sat Dec 14 18:24:20 2013
+** Created: Sun Dec 22 14:11:49 2013
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -174,10 +174,10 @@ public:
 
     rowPointsCount = new QSpinBox(widget);
     rowPointsCount->setObjectName(QString::fromUtf8("rowPointsCount"));
-    rowPointsCount->setMinimum(1);
+    rowPointsCount->setMinimum(0);
     rowPointsCount->setMaximum(999);
     rowPointsCount->setSingleStep(1);
-    rowPointsCount->setValue(84);
+    rowPointsCount->setValue(0);
 
     verticalLayout_2->addWidget(rowPointsCount);
 

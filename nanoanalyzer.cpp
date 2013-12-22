@@ -33,12 +33,12 @@ void NanoAnalyzer::redraw()
 
 void NanoAnalyzer::on_selectFileButton_clicked(){
 	QString theFileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Files (*.*)"));
-	QString extension = theFileName.split(".").last();
+	QString extension = theFileName.split(".").last().toLower();
 
-	if(QString::compare(extension, "csv") == 0){
+	if(QString::compare(extension, "csv") == 0 || QString::compare(extension, "txt") == 0){
 		fileName = theFileName;
 		redraw();
-	}else if(QString::compare(extension, "DAT") == 0){
+	}else if(QString::compare(extension, "dat") == 0){
 		fileName = theFileName;
 		redraw();
 	}
@@ -197,7 +197,13 @@ void NanoAnalyzer::draw_csv(){
 				data_vector.push_back(row);
 			}else{
 				QString line = in.readLine();
-				if(line.indexOf("Height(nm)") == 0){
+				if(line.indexOf("\"\\Samps") == 0 ){
+					int pointsCount = line.replace("\"\\Samps/line: ", "").replace("\"", "").toInt();
+					rowPointsCount = pointsCount;
+					ui.rowPointsCount->setValue(pointsCount);
+				}
+
+				if(line.indexOf("Height(nm)") == 0 || line.indexOf("Height_Sensor(nm)") == 0 ){
 					poins_started = true;
 				}
 			}

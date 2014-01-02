@@ -16,6 +16,13 @@ private slots:
     void redraw();
     void draw_csv();
     void draw_dat();
+
+    void draw_csv_table();
+    void draw_dat_table();
+
+    void read_csv(QString filename);
+    void read_dat(QString filename);
+
     void on_selectFileButton_clicked();
     void on_colorButton_clicked();
     void on_shade_view_clicked();
@@ -31,7 +38,9 @@ private slots:
     void on_columns_count_valueChanged(int value);
 private:
     Ui::NanoAnalyzerClass ui;
-	QString fileName;
+    QString extension;
+
+    QVector< float > csv_data;
 };
 
 #endif // NANOANALYZER_H

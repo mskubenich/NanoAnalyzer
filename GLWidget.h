@@ -21,8 +21,8 @@ public:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent* event);
-	void setModelVector(QVector< QVector<float> > data_vector, float max_x, float min_x, float max_y, float min_y, float max_z, float min_z, float dx, float dy, QString drawtype);
-	void setDATModelVector(QVector< QVector<float> > data_vector, float max, float maxy, QString drawtype);
+	void setModelVector(QVector< QVector<float> > data_vector, float max_x, float min_x, float max_y, float min_y, float max_z, float min_z, float dx, float dy);
+	void setDATModelVector(QVector< QVector<float> > data_vector, float max, float maxy);
 
 	void drawCSV();
 	void drawDAT();
@@ -32,9 +32,9 @@ public:
 	bool gradient;
 	GLfloat scale;
 	bool draw_axes;
+	QString drawtype;
 
 private:
-	QString drawtype;
 	void draw();
 	void drawAxes(float bigger, boolean draw_x, boolean draw_y, boolean draw_z);
 	QVector<QVector <float> > points;

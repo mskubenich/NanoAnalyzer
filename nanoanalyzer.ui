@@ -188,6 +188,9 @@
                <property name="text" >
                 <string>points</string>
                </property>
+               <property name="checked" >
+                <bool>false</bool>
+               </property>
               </widget>
               <widget class="QRadioButton" name="lines_view" >
                <property name="geometry" >
@@ -200,6 +203,9 @@
                </property>
                <property name="text" >
                 <string>lines</string>
+               </property>
+               <property name="checked" >
+                <bool>true</bool>
                </property>
               </widget>
               <widget class="QRadioButton" name="shade_view" >

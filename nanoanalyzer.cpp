@@ -50,16 +50,19 @@ void NanoAnalyzer::on_colorButton_clicked(){
 
 
 void NanoAnalyzer::on_shade_view_clicked(){
+	ui.modelView->drawtype = "shade";
 	redraw();
 }
 
 
 void NanoAnalyzer::on_lines_view_clicked(){
+	ui.modelView->drawtype = "lines";
 	redraw();
 }
 
 
 void NanoAnalyzer::on_points_view_clicked(){
+	ui.modelView->drawtype = "points";
 	redraw();
 }
 
@@ -225,16 +228,6 @@ void NanoAnalyzer::draw_csv(){
 
 		ui.positive_v->setText(QString::number(positive_v));
 		ui.negative_v->setText(QString::number(negative_v));
-		QString drawtype = "lines";
-		if(ui.points_view->isChecked()){
-			drawtype = "points";
-		}
-		if(ui.lines_view->isChecked()){
-			drawtype = "lines";
-		}
-		if(ui.shade_view->isChecked()){
-			drawtype = "shade";
-		}
 
 		int increment_x = data_vector[0].size()/ui.columns_count->value();
 		int increment_y = data_vector.size()/ui.rows_count->value();
@@ -254,7 +247,7 @@ void NanoAnalyzer::draw_csv(){
 			gl_data_vector.push_back(row);
 		}
 
-		ui.modelView->setModelVector(gl_data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx*increment_x, dy*increment_y, drawtype);
+		ui.modelView->setModelVector(gl_data_vector, max_x, min_x, max_y, min_y, max_z, min_z, dx*increment_x, dy*increment_y);
 
 		ui.tableView->setModel(model);
 	}
@@ -330,17 +323,7 @@ void NanoAnalyzer::draw_dat(){
 
 		file.close();
 
-		QString drawtype = "lines";
-		if(ui.points_view->isChecked()){
-			drawtype = "points";
-		}
-		if(ui.lines_view->isChecked()){
-			drawtype = "lines";
-		}
-		if(ui.shade_view->isChecked()){
-			drawtype = "shade";
-		}
-		ui.modelView->setDATModelVector(data_vector, max, maxy, drawtype);
+		ui.modelView->setDATModelVector(data_vector, max, maxy);
 
 		ui.tableView->setModel(model);
 

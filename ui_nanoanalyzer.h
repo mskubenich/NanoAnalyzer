@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'nanoanalyzer.ui'
 **
-** Created: Sun Dec 22 15:34:50 2013
+** Created: Thu Jan 2 12:26:15 2014
 **      by: Qt User Interface Compiler version 4.4.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -197,9 +197,11 @@ public:
     points_view = new QRadioButton(groupBox);
     points_view->setObjectName(QString::fromUtf8("points_view"));
     points_view->setGeometry(QRect(10, 10, 84, 18));
+    points_view->setChecked(false);
     lines_view = new QRadioButton(groupBox);
     lines_view->setObjectName(QString::fromUtf8("lines_view"));
     lines_view->setGeometry(QRect(10, 30, 84, 18));
+    lines_view->setChecked(true);
     shade_view = new QRadioButton(groupBox);
     shade_view->setObjectName(QString::fromUtf8("shade_view"));
     shade_view->setGeometry(QRect(10, 50, 84, 18));

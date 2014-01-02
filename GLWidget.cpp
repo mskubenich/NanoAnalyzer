@@ -37,6 +37,8 @@ GLWidget::GLWidget(QWidget *parent) :
 
 	gradient = false;
 	draw_axes = false;
+
+	drawtype = "lines";
 }
 
 void GLWidget::initializeGL(){
@@ -288,8 +290,7 @@ void GLWidget::draw(){
 	}
 }
 
-void GLWidget::setModelVector(QVector< QVector<float> > data_vector, float maxx, float minx, float maxy, float miny, float maxz, float minz, float d_x, float d_y, QString thedrawtype){
-	drawtype = thedrawtype;
+void GLWidget::setModelVector(QVector< QVector<float> > data_vector, float maxx, float minx, float maxy, float miny, float maxz, float minz, float d_x, float d_y){
 	points = data_vector;
 
 	max_x = maxx;
@@ -307,9 +308,7 @@ void GLWidget::setModelVector(QVector< QVector<float> > data_vector, float maxx,
 }
 
 
-void GLWidget::setDATModelVector(QVector< QVector<float> > data_vector, float max, float maxy, QString thedrawtype){
-	drawtype = thedrawtype;
-
+void GLWidget::setDATModelVector(QVector< QVector<float> > data_vector, float max, float maxy){
 	QVector< QVector<float> > calculated_points = QVector< QVector<float> >();
 	int i = 0;
 	while(i < data_vector.size()){
